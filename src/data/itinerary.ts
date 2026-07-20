@@ -47,6 +47,8 @@ export interface Day {
   n: number;
   weekday: string;
   phase: string;
+  /** Destino "titular" del día (título grande). */
+  dest?: string;
   title: string;
   summary: string;
   cover: string;
@@ -103,14 +105,14 @@ const dir = (waypoints: string[]) =>
 
 export const trip: Trip = {
   title: "Alemania & Alpes",
-  subtitle: "Ruta camper por el Sur · 15 días",
+  subtitle: "Ruta camper por el Sur · 16 días",
   legs: [
     {
       label: "Tramo 1 · Ida",
       emoji: "🛣️",
       mapsUrl: dir([
-        "Madrid",
-        "Cestas, Francia",
+        "Irún",
+        "Burdeos, Francia",
         "Mulhouse, Francia",
         "Eguisheim, Francia",
         "Estrasburgo, Francia",
@@ -151,8 +153,8 @@ export const trip: Trip = {
         "Neuschwanstein",
         "Lindau",
         "Besançon, Francia",
-        "San Sebastián",
-        "Madrid",
+        "Burdeos, Francia",
+        "Hossegor",
       ]),
     },
   ],
@@ -164,15 +166,15 @@ export const trip: Trip = {
       weekday: "Sábado",
       phase: "Ida · Cruzar Francia",
       title: "La gran evasión",
-      summary: "Madrid ➔ Frontera francesa",
+      summary: "Casa → Irún → Burdeos",
       cover: img("photo-1469854523086-cc02fe5d8800"),
       drive: "~6-7 h (salida mediodía)",
       stops: [
         {
           id: "d1-salida",
           type: "drive",
-          title: "Salida de Madrid",
-          desc: "Salís sábado a mediodía. Objetivo del día: pisar Francia y dormir cerca de Burdeos. Sin prisa pero sin pausa.",
+          title: "Salida de casa",
+          desc: "Salís a mediodía. Objetivo del día: cruzar a Francia por Irún y dormir cerca de Burdeos. Sin prisa pero sin pausa.",
           tips: [
             "Repostad barato en España antes de cruzar (el gasóleo francés suele ser más caro).",
             "Llevad efectivo en euros: en Alemania muchos parkings y panaderías no aceptan tarjeta.",
@@ -181,8 +183,8 @@ export const trip: Trip = {
         {
           id: "d1-cestas",
           type: "meet",
-          title: "Encuentro con los de Asturias",
-          desc: "Punto de reunión con la otra furgo (vienen desde Asturias): Área de Servicio de Cestas (A63), justo antes de Burdeos. Enorme y muy frecuentada por españoles.",
+          title: "Encuentro",
+          desc: "Punto de encuentro con la otra furgo: Área de Servicio de Cestas (A63), justo antes de Burdeos. Enorme y cómoda para juntarse.",
           mapsUrl: maps("Aire de Cestas A63 France"),
           tips: ["Coordinad hora por WhatsApp; si llegáis a horas distintas, mejor quedar en la pernocta."],
         },
@@ -863,33 +865,29 @@ export const trip: Trip = {
       n: 14,
       weekday: "Viernes",
       phase: "El retorno",
-      title: "La despedida",
-      summary: "Francia ➔ País Vasco",
-      cover: img("photo-1569388330292-7a6a841d89bd"),
-      drive: "~6 h (~600 km)",
+      title: "Rumbo al Atlántico",
+      summary: "Francia → Landas",
+      cover:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Puy_de_D%C3%B4me_during_autumn.jpg/1920px-Puy_de_D%C3%B4me_during_autumn.jpg",
+      drive: "~7 h (día largo)",
       stops: [
         {
           id: "d14-ruta",
           type: "drive",
-          title: "Cruzar Francia hacia el suroeste",
-          desc: "Día de kilómetros hacia la frontera. Turnaos y parad a comer con calma.",
-          tips: ["Si vais con tiempo, la zona de los Volcanes de Auvernia es una parada bonita para estirar las piernas."],
-        },
-        {
-          id: "d14-cena",
-          type: "eat",
-          title: "Cena de homenaje",
-          desc: "Cerrad el viaje a lo grande: unos pintxos en Donosti o una sidrería en la frontera.",
-          mapsUrl: maps("Parte Vieja Donostia San Sebastián"),
+          title: "Bajada hacia la costa",
+          desc: "Día de kilómetros cruzando Francia hasta las Landas. Turnaos al volante y parad a comer con calma.",
+          tips: [
+            "Si vais con tiempo, los Volcanes de Auvernia (zona Clermont-Ferrand) son una parada preciosa para estirar las piernas.",
+          ],
         },
         {
           id: "d14-pernocta",
           type: "sleep",
-          title: "Pernocta: Behobia / San Juan de Luz",
-          desc: "Área de autocaravanas antes del tramo final a Madrid.",
+          title: "Pernocta: Burdeos / Landas",
+          desc: "Dormid cerca de Burdeos o ya en las Landas para tener Hossegor a un paso mañana.",
           parking: {
-            name: "Área de Behobia / San Juan de Luz",
-            mapsUrl: maps("Área autocaravanas Behobia"),
+            name: "Aire de camping-car (Burdeos / Landas)",
+            mapsUrl: maps("Aire camping car Landes"),
             park4night: true,
           },
         },
@@ -901,19 +899,90 @@ export const trip: Trip = {
       n: 15,
       weekday: "Sábado",
       phase: "El retorno",
-      title: "Home sweet home",
-      summary: "País Vasco ➔ Madrid",
-      cover: img("photo-1473163928189-364b2c4e1133"),
-      drive: "~4-5 h",
+      title: "Relax final",
+      summary: "Landas → Hossegor",
+      cover:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Hossegor_plage.jpg/1920px-Hossegor_plage.jpg",
+      drive: "~1,5-2 h (llegada por la tarde)",
       stops: [
         {
-          id: "d15-final",
+          id: "d15-hossegor",
+          type: "relax",
+          title: "Hossegor",
+          desc: "Meca del surf en las Landas: playas enormes, pinares y ambiente relajado. Llegáis por la tarde para disfrutar la tarde-noche sin prisa.",
+          order: "Paseo por la playa central → atardecer → cena tranquila en el pueblo.",
+          clothing: "Bañador, y una sudadera para la noche junto al mar.",
+          mapsUrl: maps("Hossegor plage centrale"),
+        },
+        {
+          id: "d15-cena",
+          type: "eat",
+          title: "Cena de despedida",
+          desc: "Última cena todos juntos para cerrar el viajazo. Buen ambiente y marisco en Hossegor / Capbreton.",
+          mapsUrl: maps("restaurantes Hossegor Capbreton"),
+        },
+        {
+          id: "d15-pernocta",
+          type: "sleep",
+          title: "Pernocta: Hossegor",
+          desc: "Área o camping en Hossegor / Seignosse. En agosto conviene llegar con tiempo.",
+          parking: {
+            name: "Aire de camping-car Hossegor / Seignosse",
+            mapsUrl: maps("Aire camping car Hossegor"),
+            park4night: true,
+          },
+        },
+      ],
+    },
+    // ---------------------------------------------------------------- D16
+    {
+      id: "d16",
+      n: 16,
+      weekday: "Domingo",
+      phase: "El retorno",
+      title: "Home sweet home",
+      summary: "Hossegor → Casa",
+      cover:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Plaza_Mayor%2C_Madrid%2C_Espa%C3%B1a%2C_2023-01-03%2C_DD_78.jpg/1920px-Plaza_Mayor%2C_Madrid%2C_Espa%C3%B1a%2C_2023-01-03%2C_DD_78.jpg",
+      drive: "~6 h (mañana)",
+      stops: [
+        {
+          id: "d16-manana",
+          type: "relax",
+          title: "Mañana en Hossegor",
+          desc: "Último baño o café con vistas antes de emprender la vuelta a casa sin prisa.",
+        },
+        {
+          id: "d16-final",
           type: "drive",
-          title: "Tramo final a Madrid",
-          desc: "Últimas horas de furgo (vía Burgos). Despedida de los amigos asturianos, que se desvían al oeste. Llegada a Madrid.",
+          title: "Vuelta a casa",
+          desc: "Tramo final cruzando la frontera. Llegada a casa por la tarde.",
           tips: ["Descargar, limpiar la furgo y… ¡a presumir del viajazo! 🚐💨"],
         },
       ],
     },
   ],
 };
+
+// Destino "titular" de cada día (título grande); el `title` pasa a descriptor.
+const DESTS: Record<string, string> = {
+  d1: "Burdeos",
+  d2: "Mulhouse",
+  d3: "Estrasburgo",
+  d4: "Stuttgart",
+  d5: "Rothenburg",
+  d6: "Núremberg",
+  d7: "Múnich",
+  d8: "Múnich",
+  d9: "Salzburgo",
+  d10: "Königssee",
+  d11: "Eibsee",
+  d12: "Neuschwanstein",
+  d13: "Lindau",
+  d14: "Auvernia",
+  d15: "Hossegor",
+  d16: "Casa",
+};
+trip.days.forEach((d) => {
+  d.dest = DESTS[d.id] ?? d.title;
+});

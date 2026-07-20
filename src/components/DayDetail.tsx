@@ -59,14 +59,14 @@ export function DayDetail({ id }: { id: string }) {
   return (
     <main className="min-h-screen pb-28">
       {/* CABECERA */}
-      <header className="relative h-64 w-full overflow-hidden">
+      <header className="relative h-[58vh] min-h-[22rem] w-full overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={day.cover}
           alt={day.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-transparent" />
 
         <Link
           href="/"
@@ -82,11 +82,11 @@ export function DayDetail({ id }: { id: string }) {
           </p>
           <div className="flex items-end justify-between gap-3 mt-1">
             <div className="min-w-0">
-              <h1 className="text-3xl font-extrabold leading-tight text-white">
-                {day.title}
+              <h1 className="text-4xl font-extrabold leading-none text-white">
+                {day.dest ?? day.title}
               </h1>
-              <p className="text-slate-300 text-sm mt-1">{day.summary}</p>
-              <p className="text-slate-400 text-[12px] mt-1.5 inline-flex items-center gap-1.5">
+              <p className="text-coral-300 text-sm font-semibold mt-1.5">{day.title}</p>
+              <p className="text-slate-400 text-[12px] mt-1 inline-flex items-center gap-1.5">
                 {day.phase}
                 {day.drive ? (
                   <>

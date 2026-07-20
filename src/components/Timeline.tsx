@@ -22,7 +22,7 @@ export function Timeline() {
   return (
     <main className="min-h-screen pb-28">
       {/* HERO */}
-      <header className="relative h-72 w-full overflow-hidden">
+      <header className="relative h-[26rem] w-full overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={HERO_IMAGE}
@@ -81,9 +81,9 @@ export function Timeline() {
                     src={day.cover}
                     alt={day.title}
                     loading="lazy"
-                    className="w-full h-48 object-cover"
+                    className="w-full h-64 object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/5" />
 
                   {/* top: fecha + HOY */}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
@@ -99,12 +99,14 @@ export function Timeline() {
 
                   {/* bottom: título */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h2 className="text-white text-2xl font-extrabold leading-tight">
+                    <p className="text-coral-300 text-[12px] font-semibold">
                       {day.title}
+                    </p>
+                    <h2 className="text-white text-3xl font-extrabold leading-none mt-0.5">
+                      {day.dest ?? day.title}
                     </h2>
-                    <p className="text-slate-200 text-sm mt-0.5">{day.summary}</p>
                     {day.drive && (
-                      <p className="text-slate-300 text-[12px] mt-1.5 inline-flex items-center gap-1.5">
+                      <p className="text-slate-300 text-[12px] mt-2 inline-flex items-center gap-1.5">
                         <Icon name="drive" className="w-4 h-4" /> {day.drive}
                       </p>
                     )}
