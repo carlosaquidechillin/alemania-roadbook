@@ -14,13 +14,14 @@ type Ctx = {
   notes: Note[];
   byAnchor: (anchorId: string) => Note[];
   add: (anchorId: string, body: string) => Promise<void>;
+  remove: (id: string) => Promise<void>;
   openSheet: (anchorId: string, label: string) => void;
 };
 
 const NotesContext = createContext<Ctx | null>(null);
 
 export function NotesProvider({ children }: { children: ReactNode }) {
-  const { notes, add, byAnchor } = useNotes();
+  const { notes, add, remove, byAnchor } = useNotes();
   const [target, setTarget] = useState<{ anchorId: string; label: string } | null>(
     null
   );
@@ -31,12 +32,13 @@ export function NotesProvider({ children }: { children: ReactNode }) {
   const close = useCallback(() => setTarget(null), []);
 
   return (
-    <NotesContext.Provider value={{ notes, byAnchor, add, openSheet }}>
+    <NotesContext.Provider value={{ notes, byAnchor, add, remove, openSheet }}>
       {children}
       <NotesSheet
         target={target}
         notes={target ? byAnchor(target.anchorId) : []}
         onAdd={add}
+        onDelete={remove}
         onClose={close}
       />
     </NotesContext.Provider>

@@ -124,10 +124,23 @@ export function useNotes() {
     }
   }, []);
 
+  const remove = useCallback(async (id: string) => {
+    const code = codeRef.current || resolveTripCode();
+    setNotes((prev) => {
+      const next = prev.filter((n) => n.id !== id);
+      persistLocal(code, next);
+      return next;
+    });
+    if (supabase) {
+      const { error } = await supabase.from("notes").delete().eq("id", id);
+      if (error) console.error("[notes] delete error:", error.message);
+    }
+  }, []);
+
   const byAnchor = useCallback(
     (anchorId: string) => notes.filter((n) => n.anchor_id === anchorId),
     [notes]
   );
 
-  return { notes, add, byAnchor };
+  return { notes, add, remove, byAnchor };
 }
