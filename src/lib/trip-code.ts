@@ -17,20 +17,3 @@ export function resolveTripCode(): string {
     return DEFAULT_CODE;
   }
 }
-
-const NICK_KEY = "nick";
-export function getNick(): string {
-  if (typeof window === "undefined") return "";
-  try {
-    return window.localStorage.getItem(NICK_KEY) || "";
-  } catch {
-    return "";
-  }
-}
-export function setNick(nick: string) {
-  try {
-    window.localStorage.setItem(NICK_KEY, nick);
-  } catch {
-    /* noop */
-  }
-}

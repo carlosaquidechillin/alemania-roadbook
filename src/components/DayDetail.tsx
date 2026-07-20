@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { trip, type StopType } from "@/data/itinerary";
 import { useChecklist } from "@/hooks/useChecklist";
-import { useNotes } from "@/hooks/useNotes";
-import { getNick } from "@/lib/trip-code";
 import { formatDayDate } from "@/lib/dates";
 import { StopCard } from "./StopCard";
-import { NotesThread } from "./NotesThread";
+import { CommentButton } from "./CommentButton";
 import { CheckButton } from "./CheckButton";
 import { Icon } from "./Icon";
 
@@ -26,13 +24,7 @@ const PLAN_TYPES = new Set<StopType>([
 export function DayDetail({ id }: { id: string }) {
   const day = trip.days.find((d) => d.id === id);
   const { checks, toggle, setMany } = useChecklist();
-  const { add, byAnchor } = useNotes();
-  const [nick, setNick] = useState("");
   const [tab, setTab] = useState<"plan" | "practica">("plan");
-
-  useEffect(() => {
-    setNick(getNick());
-  }, []);
 
   if (!day) {
     return (
@@ -70,7 +62,7 @@ export function DayDetail({ id }: { id: string }) {
 
         <Link
           href="/"
-          className="absolute top-4 left-4 glass text-white rounded-full w-10 h-10 flex items-center justify-center"
+          className="fixed top-4 left-4 z-50 glass text-white rounded-full w-11 h-11 flex items-center justify-center shadow-lg"
           aria-label="Volver"
         >
           <Icon name="back" className="w-5 h-5" />
@@ -135,9 +127,6 @@ export function DayDetail({ id }: { id: string }) {
               stop={stop}
               checked={!!checks[stop.id]}
               onToggle={toggle}
-              notes={byAnchor(stop.id)}
-              onAddNote={add}
-              nick={nick}
             />
           ))}
 
@@ -165,9 +154,6 @@ export function DayDetail({ id }: { id: string }) {
                 stop={stop}
                 checked={!!checks[stop.id]}
                 onToggle={toggle}
-                notes={byAnchor(stop.id)}
-                onAddNote={add}
-                nick={nick}
               />
             ))}
 
@@ -208,14 +194,12 @@ export function DayDetail({ id }: { id: string }) {
         )}
 
         {/* Notas del día */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <p className="text-[13px] font-semibold text-white">Notas del día</p>
-          <NotesThread
-            anchorId={day.id}
-            notes={byAnchor(day.id)}
-            onAdd={add}
-            nick={nick}
-          />
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center justify-between">
+          <div>
+            <p className="text-[13px] font-semibold text-white">Notas del día</p>
+            <p className="text-[12px] text-slate-400">Comentarios generales de la jornada</p>
+          </div>
+          <CommentButton anchorId={day.id} />
         </div>
       </div>
     </main>

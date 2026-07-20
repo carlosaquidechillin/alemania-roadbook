@@ -8,12 +8,11 @@ export interface Note {
   id: string;
   anchor_id: string;
   body: string;
-  author_nick: string | null;
   created_at: string;
 }
 
 /**
- * Anotaciones compartidas por día o parada. Realtime con Supabase; fallback local.
+ * Notas compartidas por día o parada (sin autor). Realtime con Supabase; fallback local.
  */
 export function useNotes() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -43,11 +42,12 @@ export function useNotes() {
     let channel: ReturnType<NonNullable<typeof supabase>["channel"]> | null = null;
 
     (async () => {
-      const { data } = await supabase!
+      const { data, error } = await supabase!
         .from("notes")
-        .select("*")
+        .select("id, anchor_id, body, created_at")
         .eq("trip_code", code)
         .order("created_at", { ascending: true });
+      if (error) console.error("[notes] fetch error:", error.message);
       if (data) {
         setNotes(data as Note[]);
         persistLocal(code, data as Note[]);
@@ -86,51 +86,43 @@ export function useNotes() {
     };
   }, []);
 
-  const add = useCallback(
-    async (anchorId: string, body: string, nick: string) => {
-      const code = codeRef.current;
-      const text = body.trim();
-      if (!text) return;
+  const add = useCallback(async (anchorId: string, body: string) => {
+    const code = codeRef.current || resolveTripCode();
+    const text = body.trim();
+    if (!text) return;
 
-      if (supabase) {
-        const { data } = await supabase
-          .from("notes")
-          .insert({
-            trip_code: code,
-            anchor_id: anchorId,
-            body: text,
-            author_nick: nick || null,
-          })
-          .select()
-          .single();
-        // El realtime insertará; si no llega (misma pestaña), lo añadimos aquí.
-        if (data) {
-          setNotes((prev) =>
-            prev.some((x) => x.id === (data as Note).id)
-              ? prev
-              : [...prev, data as Note]
-          );
-        }
-      } else {
-        const local: Note = {
-          id:
-            typeof crypto !== "undefined" && "randomUUID" in crypto
-              ? crypto.randomUUID()
-              : String(Date.now()),
-          anchor_id: anchorId,
-          body: text,
-          author_nick: nick || null,
-          created_at: new Date().toISOString(),
-        };
-        setNotes((prev) => {
-          const next = [...prev, local];
-          persistLocal(code, next);
-          return next;
-        });
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("notes")
+        .insert({ trip_code: code, anchor_id: anchorId, body: text })
+        .select("id, anchor_id, body, created_at");
+      if (error) {
+        console.error("[notes] insert error:", error.message);
+        return;
       }
-    },
-    []
-  );
+      const row = data?.[0] as Note | undefined;
+      if (row) {
+        setNotes((prev) =>
+          prev.some((x) => x.id === row.id) ? prev : [...prev, row]
+        );
+      }
+    } else {
+      const local: Note = {
+        id:
+          typeof crypto !== "undefined" && "randomUUID" in crypto
+            ? crypto.randomUUID()
+            : String(Date.now()),
+        anchor_id: anchorId,
+        body: text,
+        created_at: new Date().toISOString(),
+      };
+      setNotes((prev) => {
+        const next = [...prev, local];
+        persistLocal(code, next);
+        return next;
+      });
+    }
+  }, []);
 
   const byAnchor = useCallback(
     (anchorId: string) => notes.filter((n) => n.anchor_id === anchorId),

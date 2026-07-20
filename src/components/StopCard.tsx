@@ -1,11 +1,10 @@
 "use client";
 
 import type { Stop } from "@/data/itinerary";
-import type { Note } from "@/hooks/useNotes";
 import { stopStyle } from "@/lib/stop-style";
 import { Icon } from "./Icon";
 import { CheckButton } from "./CheckButton";
-import { NotesThread } from "./NotesThread";
+import { CommentButton } from "./CommentButton";
 
 function Row({
   icon,
@@ -31,16 +30,10 @@ export function StopCard({
   stop,
   checked,
   onToggle,
-  notes,
-  onAddNote,
-  nick,
 }: {
   stop: Stop;
   checked: boolean;
   onToggle: (id: string) => void;
-  notes: Note[];
-  onAddNote: (anchorId: string, body: string, nick: string) => void;
-  nick: string;
 }) {
   const style = stopStyle[stop.type];
 
@@ -140,18 +133,21 @@ export function StopCard({
         )}
       </div>
 
-      {stop.mapsUrl && (
-        <a
-          href={stop.mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-coral-400"
-        >
-          <Icon name="pin" className="w-4 h-4" /> Abrir en Google Maps
-        </a>
-      )}
-
-      <NotesThread anchorId={stop.id} notes={notes} onAdd={onAddNote} nick={nick} />
+      <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-white/10">
+        {stop.mapsUrl ? (
+          <a
+            href={stop.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-coral-400"
+          >
+            <Icon name="pin" className="w-4 h-4" /> Google Maps
+          </a>
+        ) : (
+          <span />
+        )}
+        <CommentButton anchorId={stop.id} />
+      </div>
     </div>
   );
 }

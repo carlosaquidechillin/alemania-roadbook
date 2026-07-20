@@ -87,6 +87,12 @@ const paths: Record<string, ReactNode> = {
       <path d="M10 20a2 2 0 0 0 4 0" />
     </>
   ),
+  comment: (
+    <>
+      <path d="M21 11.5a8 8 0 0 1-8 8 8.4 8.4 0 0 1-3.6-.8L3 21l1.4-4.2A8 8 0 0 1 3 11.5a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z" />
+      <path d="M8.5 10.5h7M8.5 13.5h4" />
+    </>
+  ),
 
   // --- Tipos de parada ---
   visit: (
