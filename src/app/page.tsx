@@ -1,5 +1,11 @@
-import { Roadbook } from "@/components/Roadbook";
+import { Timeline } from "@/components/Timeline";
+import { BottomNav } from "@/components/BottomNav";
 
 export default function Home() {
-  return <Roadbook />;
+  return (
+    <>
+      <Timeline />
+      <BottomNav />
+    </>
+  );
 }

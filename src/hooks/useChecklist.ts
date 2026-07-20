@@ -125,6 +125,34 @@ export function useChecklist() {
     }
   }, []);
 
+  // Marca/desmarca varios items a la vez (p. ej. todas las paradas de un día).
+  const setMany = useCallback(async (itemIds: string[], value: boolean) => {
+    const code = codeRef.current;
+    const lsKey = `checks:${code}`;
+
+    setChecks((prev) => {
+      const next = { ...prev };
+      for (const id of itemIds) next[id] = value;
+      try {
+        localStorage.setItem(lsKey, JSON.stringify(next));
+      } catch {
+        /* noop */
+      }
+      return next;
+    });
+
+    if (supabase && itemIds.length) {
+      const now = new Date().toISOString();
+      const rows = itemIds.map((item_id) => ({
+        trip_code: code,
+        item_id,
+        checked: value,
+        updated_at: now,
+      }));
+      await supabase.from("checks").upsert(rows, { onConflict: "trip_code,item_id" });
+    }
+  }, []);
+
   const reset = useCallback(async () => {
     const code = codeRef.current;
     const lsKey = `checks:${code}`;
@@ -137,5 +165,5 @@ export function useChecklist() {
     if (supabase) await supabase.from("checks").delete().eq("trip_code", code);
   }, []);
 
-  return { checks, toggle, reset, ready };
+  return { checks, toggle, setMany, reset, ready };
 }

@@ -51,6 +51,8 @@ export interface Day {
   summary: string;
   cover: string;
   drive?: string;
+  /** Consideraciones con antelación / prepárate para mañana (reservas, horarios, madrugar). */
+  headsUp?: string[];
   stops: Stop[];
 }
 
@@ -185,6 +187,9 @@ export const trip: Trip = {
       summary: "Burdeos ➔ Mulhouse",
       cover: img("photo-1502602898657-3e91760cbb34"),
       drive: "~8-9 h (día más largo)",
+      headsUp: [
+        "Mañana (Alsacia): en Estrasburgo usad el P+R Elsau — aparcáis la furgo y el ticket incluye el tranvía al centro para todos los ocupantes.",
+      ],
       stops: [
         {
           id: "d2-ruta",
@@ -217,6 +222,10 @@ export const trip: Trip = {
       summary: "Alsacia: Eguisheim, Colmar y Estrasburgo",
       cover: img("photo-1523290821866-3df14545f228"),
       drive: "~1,5 h repartido",
+      headsUp: [
+        "Mañana entráis en Alemania: llevad ya la pegatina verde (Umweltplakette) puesta o comprada para poder pisar zonas de bajas emisiones (Stuttgart, Múnich).",
+        "El Museo Porsche (día 5) cierra los LUNES; en esta ruta cae en miércoles, así que sin problema.",
+      ],
       stops: [
         {
           id: "d3-eguisheim",
@@ -272,6 +281,10 @@ export const trip: Trip = {
       summary: "Cascadas y relojes de cuco ➔ Stuttgart",
       cover: img("photo-1516298098367-26eb4b84d432"),
       drive: "~3 h repartido",
+      headsUp: [
+        "Mañana, Museo Porsche: abre a las 9:00 y la taquilla cierra a las 17:30. Llegad pronto para dedicarle 3-4 h.",
+        "No metáis la furgo al centro de Stuttgart (tráfico y cuestas): dejadla en Cannstatter Wasen y subid en S-Bahn.",
+      ],
       stops: [
         {
           id: "d4-frontera",
@@ -326,6 +339,9 @@ export const trip: Trip = {
       summary: "Museo Porsche ➔ Rothenburg",
       cover: img("photo-1535970793482-07de93762dc4"),
       drive: "~1,5 h (Stuttgart ➔ Rothenburg)",
+      headsUp: [
+        "Rothenburg es mucho más mágico de noche, cuando se van los autobuses turísticos: aprovechad el paseo nocturno hoy.",
+      ],
       stops: [
         {
           id: "d5-porsche",
@@ -428,6 +444,10 @@ export const trip: Trip = {
       summary: "Núremberg ➔ Múnich",
       cover: img("photo-1595867865312-7c0b57a1fd90"),
       drive: "~1,5-2 h (Núremberg ➔ Múnich)",
+      headsUp: [
+        "Múnich tiene zona de bajas emisiones: aseguraos de llevar la pegatina verde antes de acercaros al centro.",
+        "Llegad al camping/Stellplatz de Múnich pronto (en agosto se llenan).",
+      ],
       stops: [
         {
           id: "d7-zeppelin",
@@ -476,6 +496,9 @@ export const trip: Trip = {
       summary: "Día completo SIN conducir",
       cover: img("photo-1517942464319-21453dd8d824"),
       drive: "Día de descanso (metro/bici)",
+      headsUp: [
+        "Mañana pisáis autopista austriaca (Salzburgo): comprad HOY la viñeta de 10 días (12,80 €) en shop.asfinag.at con validez inmediata, o en una gasolinera antes de la frontera.",
+      ],
       stops: [
         {
           id: "d8-transporte",
@@ -539,6 +562,10 @@ export const trip: Trip = {
       summary: "Múnich ➔ Salzburgo (Austria)",
       cover: img("photo-1516550893923-42d28e5677af"),
       drive: "~1,5-2 h",
+      headsUp: [
+        "Mañana MADRUGAD para el Königssee: coged uno de los primeros barcos (~8:00-9:00) para evitar colas y masificación.",
+        "Llegad pronto al sitio de pernocta de Berchtesgaden.",
+      ],
       stops: [
         {
           id: "d9-vineta",
@@ -643,6 +670,11 @@ export const trip: Trip = {
       summary: "Walchensee + Geroldsee ➔ Eibsee",
       cover: img("photo-1576510229880-49b27868d89d"),
       drive: "~3 h repartido (ruta escénica)",
+      headsUp: [
+        "Mañana id TEMPRANO a Neuschwanstein y al Marienbrücke: se masifica muchísimo a media mañana.",
+        "Comprobad en hohenschwangau.de que el puente Marienbrücke esté abierto ese día (cierran por viento/obras).",
+        "Recordad: solo veréis el castillo por fuera (sin reserva de interior).",
+      ],
       stops: [
         {
           id: "d11-walchensee",
@@ -699,6 +731,9 @@ export const trip: Trip = {
       summary: "Partnachklamm ➔ Neuschwanstein",
       cover: img("photo-1533052664743-2754913b0c1c"),
       drive: "~1 h (Garmisch ➔ Füssen)",
+      headsUp: [
+        "Mañana empieza la vuelta: cruzad por Bregenz (Austria), NO por autopista suiza (su viñeta cuesta 40 € y solo es anual).",
+      ],
       stops: [
         {
           id: "d12-partnachklamm",

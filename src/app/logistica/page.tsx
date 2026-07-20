@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import { BottomNav } from "@/components/BottomNav";
 
 export const metadata: Metadata = {
   title: "Logística · Roadbook Alemania",
@@ -32,12 +32,9 @@ function Section({
 
 export default function Logistica() {
   return (
-    <main className="min-h-screen pb-24 bg-slate-50">
+    <main className="min-h-screen pb-28 bg-slate-50">
       <header className="bg-emerald-700 text-white px-5 pt-6 pb-8">
-        <Link href="/" className="text-emerald-100 text-sm font-semibold">
-          ← Volver al itinerario
-        </Link>
-        <h1 className="text-2xl font-extrabold mt-2">Logística del viaje</h1>
+        <h1 className="text-2xl font-extrabold">Logística del viaje</h1>
         <p className="text-emerald-100 text-sm mt-1">
           Todo lo que hay que pagar, llevar y tener en cuenta.
         </p>
@@ -166,14 +163,7 @@ export default function Logistica() {
         </Section>
       </div>
 
-      <div className="px-4 mt-6">
-        <Link
-          href="/"
-          className="block text-center bg-emerald-600 text-white font-bold py-3 rounded-xl"
-        >
-          ← Volver al itinerario
-        </Link>
-      </div>
+      <BottomNav />
     </main>
   );
 }
