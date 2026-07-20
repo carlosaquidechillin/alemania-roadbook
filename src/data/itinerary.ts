@@ -70,8 +70,32 @@ export interface Trip {
 }
 
 // Helpers
+// Portadas: fotos reales de cada sitio (Wikimedia Commons, licencia libre CC/CC0).
+// El helper mapea el id antiguo → la foto real; si no está, cae a Unsplash.
+const REAL_COVERS: Record<string, string> = {
+  "photo-1469854523086-cc02fe5d8800": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Dune_du_Pilat_%28Cap_Ferret%29.jpg/1920px-Dune_du_Pilat_%28Cap_Ferret%29.jpg", // d1 Dune du Pilat
+  "photo-1502602898657-3e91760cbb34": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Panorama_Place_de_la_Bourse_Bordeaux.jpg/1920px-Panorama_Place_de_la_Bourse_Bordeaux.jpg", // d2 Burdeos
+  "photo-1523290821866-3df14545f228": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/20241002_Petite_Venise_Colmar_02.jpg/1920px-20241002_Petite_Venise_Colmar_02.jpg", // d3 Colmar
+  "photo-1516298098367-26eb4b84d432": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Triberger_Wasserf%C3%A4lle_%28Triberg_im_Schwarzwald%29.jpg/1920px-Triberger_Wasserf%C3%A4lle_%28Triberg_im_Schwarzwald%29.jpg", // d4 Triberg
+  "photo-1535970793482-07de93762dc4": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Porsche_Museum_stairs_2013.jpg/1920px-Porsche_Museum_stairs_2013.jpg", // d5 Museo Porsche
+  "photo-1589881738899-878f9c1c2c1e": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Bamberg_Altes_Rathaus_17RM1565-PSD.jpg/1920px-Bamberg_Altes_Rathaus_17RM1565-PSD.jpg", // d6 Bamberg
+  "photo-1595867865312-7c0b57a1fd90": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/2019-11-16%2C_Glockenspiel%2C_Neues_M%C3%BCnchner_Rathaus%2C_IMG_7463_edit_Christoph_Braun.jpg/1920px-2019-11-16%2C_Glockenspiel%2C_Neues_M%C3%BCnchner_Rathaus%2C_IMG_7463_edit_Christoph_Braun.jpg", // d7 Múnich
+  "photo-1517942464319-21453dd8d824": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Surfer_auf_und_an_der_Eisbachwelle_M%C3%BCnchen_Bild_2_2023-11-04.jpg/1920px-Surfer_auf_und_an_der_Eisbachwelle_M%C3%BCnchen_Bild_2_2023-11-04.jpg", // d8 Eisbach
+  "photo-1516550893923-42d28e5677af": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Salzburg_Altstadt_Panorama_20170409_02.jpg/1920px-Salzburg_Altstadt_Panorama_20170409_02.jpg", // d9 Salzburgo
+  "photo-1550587060-1d37c2c6174f": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Sankt_Bartholom%C3%A4%2C_Nationalpark-Informationsstelle%2C_3.jpeg/1920px-Sankt_Bartholom%C3%A4%2C_Nationalpark-Informationsstelle%2C_3.jpeg", // d10 Königssee
+  "photo-1576510229880-49b27868d89d": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Eibsee_von_der_Zugspitze_%282016%29.jpg/1920px-Eibsee_von_der_Zugspitze_%282016%29.jpg", // d11 Eibsee
+  "photo-1533052664743-2754913b0c1c": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Neuschwanstein_Castle_2024-02.jpg/1920px-Neuschwanstein_Castle_2024-02.jpg", // d12 Neuschwanstein
+  "photo-1656334381540-f222d65b1222": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/20221020_Leuchtturm_Lindau_02.jpg/1920px-20221020_Leuchtturm_Lindau_02.jpg", // d13 Lindau
+  "photo-1629143379904-11e0879107f9": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Puy_de_D%C3%B4me_during_autumn.jpg/1920px-Puy_de_D%C3%B4me_during_autumn.jpg", // d14 Puy de Dôme
+  "photo-1473163928189-364b2c4e1133": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Plaza_Mayor%2C_Madrid%2C_Espa%C3%B1a%2C_2023-01-03%2C_DD_78.jpg/1920px-Plaza_Mayor%2C_Madrid%2C_Espa%C3%B1a%2C_2023-01-03%2C_DD_78.jpg", // d15 Madrid
+};
 const img = (id: string) =>
+  REAL_COVERS[id] ??
   `https://images.unsplash.com/${id}?q=80&w=1600&auto=format&fit=crop`;
+
+// Foto de cabecera de la home (Hintersee, Ramsau — Alpes de Berchtesgaden).
+export const HERO_IMAGE =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Hintersee-Hochkalter.jpg/1920px-Hintersee-Hochkalter.jpg";
 const maps = (q: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 const dir = (waypoints: string[]) =>

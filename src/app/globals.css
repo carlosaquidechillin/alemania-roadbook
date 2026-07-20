@@ -3,33 +3,45 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f8fafc;
-  --fg: #0f172a;
+  --bg: #0a0e12;
+  --fg: #e8edf2;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg);
 }
 
 body {
   background-color: var(--bg);
   color: var(--fg);
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
 }
 
-/* Accordion animation */
-.accordion-content {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-}
-.accordion-open {
-  max-height: 6000px;
-  opacity: 1;
+/* Tipografía de titulares un poco más apretada y moderna */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
 }
 
-/* Safe-area padding for installed PWA on iOS */
+/* Superficies de cristal oscuro reutilizables */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
 .safe-bottom {
-  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
+}
+
+/* Ocultar scrollbar horizontal en filas deslizables */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -24,14 +24,14 @@ export function NotesThread({
   };
 
   return (
-    <div className="mt-2">
+    <div className="mt-3">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="text-[12px] font-semibold text-emerald-700 flex items-center gap-1"
+        className="text-[12px] font-semibold text-aqua-300 flex items-center gap-1.5"
       >
-        💬 Notas del grupo{notes.length ? ` (${notes.length})` : ""}
-        <span className="text-slate-400">{open ? "▲" : "▼"}</span>
+        Notas del grupo{notes.length ? ` · ${notes.length}` : ""}
+        <span className="text-slate-500">{open ? "▲" : "▼"}</span>
       </button>
 
       {open && (
@@ -39,10 +39,10 @@ export function NotesThread({
           {notes.map((n) => (
             <div
               key={n.id}
-              className="bg-slate-50 border border-slate-100 rounded-lg px-3 py-2"
+              className="bg-white/5 border border-white/10 rounded-xl px-3 py-2"
             >
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{n.body}</p>
-              <p className="text-[10px] text-slate-400 mt-1">
+              <p className="text-sm text-slate-200 whitespace-pre-wrap">{n.body}</p>
+              <p className="text-[10px] text-slate-500 mt-1">
                 {n.author_nick ? `— ${n.author_nick} · ` : ""}
                 {new Date(n.created_at).toLocaleString("es-ES", {
                   day: "2-digit",
@@ -62,12 +62,12 @@ export function NotesThread({
                 if (e.key === "Enter") submit();
               }}
               placeholder="Añadir una nota…"
-              className="flex-1 text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="flex-1 text-sm bg-white/5 border border-white/15 text-white placeholder-slate-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-coral-400"
             />
             <button
               type="button"
               onClick={submit}
-              className="bg-emerald-600 text-white text-sm font-semibold px-3 rounded-lg active:scale-95 transition"
+              className="bg-coral-500 text-white text-sm font-semibold px-3 rounded-lg active:scale-95 transition"
             >
               Enviar
             </button>

@@ -1,20 +1,22 @@
 import type { StopType } from "@/data/itinerary";
+import type { IconName } from "@/components/Icon";
 
+// Icono + etiqueta + clases del chip (sobre fondo oscuro) por tipo de parada.
 export const stopStyle: Record<
   StopType,
-  { emoji: string; label: string; badge: string }
+  { icon: IconName; label: string; chip: string }
 > = {
-  visit: { emoji: "📸", label: "Visita", badge: "bg-emerald-100 text-emerald-700" },
-  drive: { emoji: "🛣️", label: "Ruta", badge: "bg-slate-100 text-slate-600" },
-  sleep: { emoji: "🛏️", label: "Pernocta", badge: "bg-indigo-100 text-indigo-700" },
-  swim: { emoji: "🏊", label: "Baño", badge: "bg-cyan-100 text-cyan-700" },
-  eat: { emoji: "🍽️", label: "Comer", badge: "bg-orange-100 text-orange-700" },
-  parking: { emoji: "🅿️", label: "Parking", badge: "bg-blue-100 text-blue-700" },
-  transport: { emoji: "🚈", label: "Transporte", badge: "bg-violet-100 text-violet-700" },
-  warning: { emoji: "⚠️", label: "Aviso", badge: "bg-amber-100 text-amber-800" },
-  walk: { emoji: "🥾", label: "Paseo", badge: "bg-lime-100 text-lime-700" },
-  burger: { emoji: "🍔", label: "Burger", badge: "bg-yellow-100 text-yellow-800" },
-  gas: { emoji: "⛽", label: "Gasolina", badge: "bg-slate-100 text-slate-600" },
-  meet: { emoji: "🤝", label: "Encuentro", badge: "bg-teal-100 text-teal-700" },
-  relax: { emoji: "🍺", label: "Relax", badge: "bg-amber-100 text-amber-700" },
+  visit: { icon: "visit", label: "Visita", chip: "bg-aqua-400/15 text-aqua-300" },
+  drive: { icon: "drive", label: "Ruta", chip: "bg-white/10 text-slate-300" },
+  sleep: { icon: "sleep", label: "Pernocta", chip: "bg-indigo-400/15 text-indigo-300" },
+  swim: { icon: "swim", label: "Baño", chip: "bg-cyan-400/15 text-cyan-300" },
+  eat: { icon: "eat", label: "Comer", chip: "bg-coral-500/20 text-coral-300" },
+  parking: { icon: "parking", label: "Parking", chip: "bg-sky-400/15 text-sky-300" },
+  transport: { icon: "transport", label: "Transporte", chip: "bg-violet-400/15 text-violet-300" },
+  warning: { icon: "warning", label: "Aviso", chip: "bg-amber-400/15 text-amber-300" },
+  walk: { icon: "walk", label: "Paseo", chip: "bg-lime-400/15 text-lime-300" },
+  burger: { icon: "burger", label: "Burger", chip: "bg-coral-500/20 text-coral-300" },
+  gas: { icon: "gas", label: "Gasolina", chip: "bg-white/10 text-slate-300" },
+  meet: { icon: "meet", label: "Encuentro", chip: "bg-teal-400/15 text-teal-300" },
+  relax: { icon: "relax", label: "Relax", chip: "bg-coral-500/20 text-coral-300" },
 };
