@@ -1,0 +1,20 @@
+{
+  "name": "Roadbook Alemania — Ruta Camper",
+  "short_name": "Roadbook DE",
+  "description": "Guía de viaje colaborativa para la ruta camper por el sur de Alemania.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#059669",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# Config de pnpm (pnpm 10+ lee aquí los ajustes que antes iban en package.json).
+
+# sharp entra como dependencia transitiva pero NO la usamos (la app usa <img>, no
+# next/image). La marcamos para que pnpm no intente su build nativo y no falle el
+# "pnpm install" por build scripts pendientes (eso rompería el deploy en Vercel).
+allowBuilds:
+  sharp: false
+
+# No re-verificar dependencias antes de cada "pnpm run".
+verifyDepsBeforeRun: false
