@@ -276,6 +276,7 @@ export const trip: Trip = {
       drive: "~1,5 h repartido",
       headsUp: [
         "Mañana entráis en Alemania: llevad ya la pegatina verde (Umweltplakette) puesta o comprada para poder pisar zonas de bajas emisiones (Stuttgart, Múnich).",
+        "Si vais con la T4: su motor no da para la pegatina verde y no puede entrar en Stuttgart ni en el centro de Múnich. No pidáis pegatina para ella — solo hay que aparcarla fuera de esas zonas (ver detalle en cada parada).",
         "El Museo Porsche (día 5) cierra los LUNES; en esta ruta cae en miércoles, así que sin problema.",
       ],
       stops: [
@@ -380,12 +381,12 @@ export const trip: Trip = {
           type: "sleep",
           when: "Noche",
           title: "Pernocta: Stuttgart (Cannstatter Wasen)",
-          desc: "Explanada gigante de la feria, muy cerca del centro. Sin lujos pero casi siempre hay sitio y estáis en la ciudad.",
+          desc: "Explanada gigante de la feria, muy cerca del centro. Sin lujos pero casi siempre hay sitio y estáis en la ciudad. ⚠️ Toda la ciudad de Stuttgart (incluido Cannstatter Wasen) es zona de bajas emisiones: solo vale la pegatina verde.",
           parking: {
             name: "Stellplatz Cannstatter Wasen",
             mapsUrl: maps("Wohnmobil Stellplatz Cannstatter Wasen Stuttgart"),
             park4night: true,
-            note: "Mañana decidís: seguir en furgo hasta el parking del museo, o dejarla aquí y coger el S-Bahn.",
+            note: "Mañana decidís: seguir en furgo hasta el parking del museo, o dejarla aquí y coger el S-Bahn. Si vais con la T4 (sin pegatina válida): no puede entrar aquí ni en ningún punto de Stuttgart — dejadla en un P+R a las afueras, fuera del límite de la zona, y venid juntos en S-Bahn.",
           },
         },
       ],
@@ -483,6 +484,7 @@ export const trip: Trip = {
           tips: [
             "🃏 COMODÍN: si ese día vais cansados, saltad Bamberg y meted Regensburg mañana de camino a Múnich (queda casi de paso).",
             "El centro histórico es incómodo para entrar con la furgo: dejadla en uno de los aparcamientos periféricos bien señalizados, el casco se recorre andando.",
+            "Bamberg no tiene zona de bajas emisiones: sin problema para la T4.",
           ],
           mapsUrl: maps("Altes Rathaus Bamberg"),
         },
@@ -491,7 +493,7 @@ export const trip: Trip = {
           type: "visit",
           when: "Tarde",
           title: "Núremberg · Casco antiguo",
-          desc: "Murallas, castillo imperial en lo alto y casco antiguo peatonal precioso. Paseo de tarde.",
+          desc: "Murallas, castillo imperial en lo alto y casco antiguo peatonal precioso. Paseo de tarde. Núremberg es de las pocas grandes ciudades alemanas sin zona de bajas emisiones: sin problema para la T4.",
           order: "Kaiserburg (castillo imperial) → Hauptmarkt → casa de Durero.",
           mapsUrl: maps("Kaiserburg Nürnberg"),
         },
@@ -522,6 +524,7 @@ export const trip: Trip = {
       drive: "~1,5-2 h (Núremberg ➔ Múnich)",
       headsUp: [
         "Múnich tiene zona de bajas emisiones: aseguraos de llevar la pegatina verde antes de acercaros al centro.",
+        "Si vais con la T4: Camping Thalkirchen está DENTRO del anillo restringido (Mittlerer Ring), así que no puede llegar allí. El Stellplatz del Allianz Arena está fuera del anillo — es el sitio para la T4 estas dos noches; os reunís en U-Bahn.",
         "Llegad al camping/Stellplatz de Múnich pronto (en agosto se llenan).",
       ],
       stops: [
@@ -549,19 +552,19 @@ export const trip: Trip = {
           type: "warning",
           when: "Tarde",
           title: "Pegatina verde para Múnich",
-          desc: "Múnich tiene zona de bajas emisiones (Umweltzone). Necesitáis la pegatina verde para entrar al centro; multa 100 € si no. Ver Logística.",
+          desc: "Múnich tiene zona de bajas emisiones (Umweltzone) que cubre todo el interior del Mittlerer Ring (el anillo de circunvalación). El propio anillo se puede circular sin pegatina, pero para entrar dentro hace falta la verde; multa 100 € si no. Con la T4 (sin pegatina válida) no se puede entrar dentro del anillo bajo ningún concepto. Ver Logística.",
         },
         {
           id: "d7-pernocta",
           type: "sleep",
           when: "Noche",
           title: "Pernocta: Múnich (Camp base, noche 1)",
-          desc: "Camping Thalkirchen: el mítico, junto al río Isar y el zoo, con metro al centro. No es lujoso pero es 'el sitio'. En agosto llega pronto (antes de 16-17h).",
+          desc: "Camping Thalkirchen: el mítico, junto al río Isar y el zoo, con metro al centro. No es lujoso pero es 'el sitio'. En agosto llega pronto (antes de 16-17h). ⚠️ Está DENTRO del Mittlerer Ring (zona de bajas emisiones): solo accesible con pegatina verde.",
           parking: {
-            name: "Camping Thalkirchen (München)",
+            name: "Camping Thalkirchen (München) — solo con pegatina verde",
             mapsUrl: maps("Camping Thalkirchen München"),
             park4night: true,
-            note: "Alternativa: Stellplatz del Allianz Arena (feo pero seguro, con metro) los días sin partido.",
+            note: "Si vais con la T4 (sin pegatina válida): no puede entrar aquí. Su sitio es el Stellplatz del Allianz Arena, que queda fuera del anillo — dormís separados esas dos noches y os reunís en U-Bahn (hay línea directa).",
           },
         },
       ],
@@ -636,8 +639,9 @@ export const trip: Trip = {
           title: "Pernocta: Múnich (noche 2)",
           desc: "Repetís campo base. Descanso merecido.",
           parking: {
-            name: "Camping Thalkirchen",
+            name: "Camping Thalkirchen (T6) / Allianz Arena (T4)",
             mapsUrl: maps("Camping Thalkirchen München"),
+            note: "Misma repartición que la noche 1: T6 en Thalkirchen, T4 en Allianz Arena (fuera del anillo restringido).",
           },
         },
       ],
@@ -683,6 +687,7 @@ export const trip: Trip = {
           order: "Getreidegasse (calle comercial histórica) → jardines de Mirabell → subida a la fortaleza Hohensalzburg (funicular) para las vistas.",
           cost: [{ label: "Funicular + fortaleza", amount: "~14-16 €" }],
           clothing: "Calzado cómodo; para la fortaleza, algo de abrigo si sube el viento.",
+          tips: ["Las restricciones ambientales de Austria (IG-L) son para camiones, no afectan a furgonetas <3,5t: aquí ni la T6 ni la T4 tienen ningún problema."],
           mapsUrl: maps("Festung Hohensalzburg"),
         },
         {

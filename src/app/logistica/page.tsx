@@ -91,6 +91,37 @@ export default function Logistica() {
           </div>
         </Section>
 
+        <Section emoji="🚙" title="Dos furgonetas, normativa distinta (T6 vs T4)">
+          <div>
+            <p className="font-semibold text-white">🟢 T6 California Beach diésel 2018</p>
+            <p className="mt-1">
+              Al ser diésel de 2018 cumple Euro 6 de sobra: <b className="text-white">pegatina verde sin problema</b>.
+              Pídela ya online (Berlín ~6 €, llega por correo en 1-2 semanas) o cómprala en
+              ruta en cualquier TÜV/DEKRA (6-10 €, al momento).
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">🔴 T4 diésel (sin pegatina válida)</p>
+            <p className="mt-1">
+              Las T4 (1990-2003) cumplen como mucho Euro 3, y desde 2025 las ciudades alemanas{" "}
+              <b className="text-white">solo aceptan la pegatina verde</b> (ni amarilla ni roja
+              sirven ya). Con Euro 3 o menos, no hay pegatina que valga.
+            </p>
+            <p className="mt-1">
+              <b className="text-white">No pidáis ninguna pegatina para la T4</b>: sería tirar
+              el dinero. En Alemania no hay obligación de llevar pegatina si no vas a entrar en
+              una zona restringida — solo multan (100 €) si te pillan <i>dentro</i> sin la verde.
+            </p>
+            <p className="mt-1">
+              <b className="text-white">Regla de oro:</b> autopistas, pueblos, zonas rurales y
+              los Alpes, sin ningún problema. Solo hay que evitar el centro de las ciudades con
+              zona de bajas emisiones activa (ver aviso específico en Stuttgart y Múnich en el
+              itinerario) — ahí, aparcar fuera del límite y moveros juntos en la T6 o en
+              transporte público.
+            </p>
+          </div>
+        </Section>
+
         <Section emoji="🚐" title="Conducir y pernoctar en camper">
           <ul className="list-disc pl-5 space-y-1.5">
             <li><b className="text-white">Stellplatz</b> mejor que camping para noches de paso: baratos (10-15 € o gratis), con máquina, sin reserva.</li>
