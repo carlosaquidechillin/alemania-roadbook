@@ -4,6 +4,7 @@ import Link from "next/link";
 import { trip, HERO_IMAGE, type Day } from "@/data/itinerary";
 import { useChecklist } from "@/hooks/useChecklist";
 import { formatDayDate, todayDayIndex } from "@/lib/dates";
+import { sleepLabel } from "@/lib/day-helpers";
 import { ProgressBar } from "./ProgressBar";
 import { CheckButton } from "./CheckButton";
 import { Icon } from "./Icon";
@@ -97,17 +98,24 @@ export function Timeline() {
 
                   {/* bottom: título */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <p className="text-coral-300 text-[12px] font-semibold">
+                    <p className="text-coral-300 text-[11px] font-semibold uppercase tracking-wide">
                       {day.title}
                     </p>
-                    <h2 className="text-white text-3xl font-extrabold leading-none mt-0.5">
-                      {day.dest ?? day.title}
+                    <h2 className="text-white text-xl font-extrabold leading-tight mt-0.5">
+                      {day.route}
                     </h2>
-                    {day.drive && (
-                      <p className="text-slate-300 text-[12px] mt-2 inline-flex items-center gap-1.5">
-                        <Icon name="drive" className="w-4 h-4" /> {day.drive}
-                      </p>
-                    )}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
+                      {day.drive && (
+                        <p className="text-slate-300 text-[12px] inline-flex items-center gap-1.5">
+                          <Icon name="drive" className="w-4 h-4" /> {day.drive}
+                        </p>
+                      )}
+                      {sleepLabel(day) && (
+                        <p className="text-slate-300 text-[12px] inline-flex items-center gap-1.5">
+                          <Icon name="sleep" className="w-4 h-4" /> Duermes en: {sleepLabel(day)}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </Link>
 

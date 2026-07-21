@@ -51,9 +51,16 @@ export function StopCard({
           <Icon name={style.icon} className="w-5 h-5" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
-            {style.label}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              {style.label}
+            </p>
+            {stop.when && (
+              <span className="text-[10px] font-bold uppercase tracking-wider text-aqua-300 inline-flex items-center gap-1">
+                <Icon name="clock" className="w-3 h-3" /> {stop.when}
+              </span>
+            )}
+          </div>
           <h4 className="font-bold text-white leading-snug">{stop.title}</h4>
         </div>
         <CheckButton checked={checked} onToggle={() => onToggle(stop.id)} size="sm" />
@@ -84,8 +91,29 @@ export function StopCard({
         )}
 
         {stop.clothing && <Row icon="shirt" label="Ropa:">{stop.clothing}</Row>}
-        {stop.transport && (
+        {stop.transport && !stop.access && (
           <Row icon="transport" label="Cómo llegar:">{stop.transport}</Row>
+        )}
+
+        {stop.access && (
+          <div className="rounded-xl bg-white/5 px-3 py-2.5 space-y-2">
+            <div className="flex gap-2.5 text-sm">
+              <Icon name="drive" className="w-4 h-4 mt-0.5 shrink-0 text-aqua-300" />
+              <p className="text-slate-300 leading-relaxed">
+                <span className="font-semibold text-aqua-200">Recomendado: </span>
+                {stop.access.recommended}
+              </p>
+            </div>
+            {stop.access.alt && (
+              <div className="flex gap-2.5 text-sm">
+                <Icon name="transport" className="w-4 h-4 mt-0.5 shrink-0 text-slate-400" />
+                <p className="text-slate-400 leading-relaxed">
+                  <span className="font-semibold text-slate-300">Alternativa: </span>
+                  {stop.access.alt}
+                </p>
+              </div>
+            )}
+          </div>
         )}
 
         {stop.parking && (

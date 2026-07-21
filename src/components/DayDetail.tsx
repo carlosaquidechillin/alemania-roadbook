@@ -5,6 +5,7 @@ import { useState } from "react";
 import { trip, type StopType } from "@/data/itinerary";
 import { useChecklist } from "@/hooks/useChecklist";
 import { formatDayDate } from "@/lib/dates";
+import { sleepLabel } from "@/lib/day-helpers";
 import { StopCard } from "./StopCard";
 import { CommentButton } from "./CommentButton";
 import { CheckButton } from "./CheckButton";
@@ -66,19 +67,23 @@ export function DayDetail({ id }: { id: string }) {
           </p>
           <div className="flex items-end justify-between gap-3 mt-1">
             <div className="min-w-0">
-              <h1 className="text-4xl font-extrabold leading-none text-white">
-                {day.dest ?? day.title}
+              <p className="text-coral-300 text-[12px] font-semibold">{day.title}</p>
+              <h1 className="text-2xl font-extrabold leading-tight text-white mt-0.5">
+                {day.route}
               </h1>
-              <p className="text-coral-300 text-sm font-semibold mt-1.5">{day.title}</p>
-              <p className="text-slate-400 text-[12px] mt-1 inline-flex items-center gap-1.5">
-                {day.phase}
-                {day.drive ? (
-                  <>
-                    {" · "}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[12px] text-slate-400">
+                <span>{day.phase}</span>
+                {day.drive && (
+                  <span className="inline-flex items-center gap-1.5">
                     <Icon name="drive" className="w-4 h-4" /> {day.drive}
-                  </>
-                ) : null}
-              </p>
+                  </span>
+                )}
+                {sleepLabel(day) && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <Icon name="sleep" className="w-4 h-4" /> Duermes en: {sleepLabel(day)}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="flex flex-col items-center shrink-0">
               <CheckButton checked={done} onToggle={() => setMany(stopIds, !done)} />

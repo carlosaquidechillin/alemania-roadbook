@@ -28,16 +28,30 @@ export interface ParkingInfo {
   note?: string;
 }
 
+export type WhenOfDay = "Mañana" | "Mediodía" | "Tarde" | "Noche";
+
+export interface AccessOptions {
+  /** Opción principal recomendada (con el motivo). */
+  recommended: string;
+  /** Alternativa real (p. ej. transporte público si preferís no mover la furgo). */
+  alt?: string;
+}
+
 export interface Stop {
   id: string;
   type: StopType;
+  /** Momento del día en que ocurre esta parada (ayuda a leer el recorrido). */
+  when?: WhenOfDay;
   title: string;
   desc: string;
   order?: string; // qué ver y en qué orden
   cost?: Cost[];
   clothing?: string;
   parking?: ParkingInfo;
+  /** Cómo llegar/moverse cuando hay una única forma sensata (frase corta). */
   transport?: string;
+  /** Cómo llegar/moverse cuando hay disyuntiva real furgo-vs-transporte. */
+  access?: AccessOptions;
   mapsUrl?: string;
   tips?: string[];
 }
@@ -47,8 +61,10 @@ export interface Day {
   n: number;
   weekday: string;
   phase: string;
-  /** Destino "titular" del día (título grande). */
+  /** Destino "titular" del día (ya no se muestra grande; queda como fallback). */
   dest?: string;
+  /** Recorrido real y preciso del día (titular actual), p. ej. "Rothenburg (mañana) → Bamberg → Núremberg". */
+  route: string;
   title: string;
   summary: string;
   cover: string;
@@ -165,6 +181,7 @@ export const trip: Trip = {
       n: 1,
       weekday: "Sábado",
       phase: "Ida · Cruzar Francia",
+      route: "Casa → Irún → Burdeos",
       title: "La gran evasión",
       summary: "Casa → Irún → Burdeos",
       cover: img("photo-1469854523086-cc02fe5d8800"),
@@ -173,6 +190,7 @@ export const trip: Trip = {
         {
           id: "d1-salida",
           type: "drive",
+          when: "Mediodía",
           title: "Salida de casa",
           desc: "Salís a mediodía. Objetivo del día: cruzar a Francia por Irún y dormir cerca de Burdeos. Sin prisa pero sin pausa.",
           tips: [
@@ -183,6 +201,7 @@ export const trip: Trip = {
         {
           id: "d1-cestas",
           type: "meet",
+          when: "Tarde",
           title: "Encuentro",
           desc: "Punto de encuentro con la otra furgo: Área de Servicio de Cestas (A63), justo antes de Burdeos. Enorme y cómoda para juntarse.",
           mapsUrl: maps("Aire de Cestas A63 France"),
@@ -191,6 +210,7 @@ export const trip: Trip = {
         {
           id: "d1-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Gastes / Libourne",
           desc: "Evitad dormir en áreas de autopista cerca de Burdeos (hay robos). Salid a un pueblo tranquilo.",
           clothing: "Noche templada; con sábana o saco fino basta.",
@@ -209,6 +229,7 @@ export const trip: Trip = {
       n: 2,
       weekday: "Domingo",
       phase: "Ida · Cruzar Francia",
+      route: "Burdeos → Mulhouse (día de carretera)",
       title: "Maratón de asfalto",
       summary: "Burdeos ➔ Mulhouse",
       cover: img("photo-1502602898657-3e91760cbb34"),
@@ -220,6 +241,7 @@ export const trip: Trip = {
         {
           id: "d2-ruta",
           type: "drive",
+          when: "Mañana",
           title: "Cruzar Francia de oeste a este",
           desc: "El día más pesado de coche: Burdeos → Clermont-Ferrand → Mulhouse. Turnaos al volante y parad a estirar las piernas.",
           tips: ["Revisad Waze: según tráfico puede compensar la vía por Tours o por Lyon."],
@@ -227,6 +249,7 @@ export const trip: Trip = {
         {
           id: "d2-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Mulhouse",
           desc: "Dormir pegados a la frontera para entrar en Alsacia frescos al día siguiente.",
           parking: {
@@ -244,6 +267,7 @@ export const trip: Trip = {
       n: 3,
       weekday: "Lunes",
       phase: "Ida · Alsacia",
+      route: "Eguisheim → Colmar → Estrasburgo (noche)",
       title: "Cuento de hadas",
       summary: "Alsacia: Eguisheim, Colmar y Estrasburgo",
       cover: img("photo-1523290821866-3df14545f228"),
@@ -256,6 +280,7 @@ export const trip: Trip = {
         {
           id: "d3-eguisheim",
           type: "visit",
+          when: "Mañana",
           title: "Eguisheim",
           desc: "Considerado uno de los pueblos más bonitos de Francia. Trazado circular, callejuelas con casas de entramado y flores por todas partes. Se ve en 1 h.",
           order: "Aparcar fuera → plaza central → dar la vuelta al círculo exterior de murallas.",
@@ -266,6 +291,7 @@ export const trip: Trip = {
         {
           id: "d3-colmar",
           type: "eat",
+          when: "Mediodía",
           title: "Colmar · La Petite Venise",
           desc: "'La pequeña Venecia': canales y casas de colores. Parada para comer.",
           order: "Barrio Petite Venise → mercado cubierto (Marché Couvert) → Quai de la Poissonnerie.",
@@ -276,6 +302,7 @@ export const trip: Trip = {
         {
           id: "d3-estrasburgo",
           type: "visit",
+          when: "Tarde",
           title: "Estrasburgo · Catedral y Petite France",
           desc: "La puerta a la Selva Negra. El barrio de La Petite France es puro escenario de cuento; la catedral gótica es espectacular (subid a la plataforma si hay tiempo).",
           order: "Catedral → barrio Petite France → canales al atardecer.",
@@ -286,6 +313,7 @@ export const trip: Trip = {
         {
           id: "d3-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Estrasburgo",
           desc: "Camping de Strasbourg (Montagne Verte) con tranvía directo al centro. Si está lleno, el propio P+R Elsau permite pernocta de tránsito (ruidoso pero legal y barato).",
           parking: {
@@ -303,18 +331,20 @@ export const trip: Trip = {
       n: 4,
       weekday: "Martes",
       phase: "Selva Negra + Motor",
+      route: "Gengenbach → Triberg → Stuttgart (noche)",
       title: "Selva Negra",
       summary: "Cascadas y relojes de cuco ➔ Stuttgart",
       cover: img("photo-1516298098367-26eb4b84d432"),
       drive: "~3 h repartido",
       headsUp: [
         "Mañana, Museo Porsche: abre a las 9:00 y la taquilla cierra a las 17:30. Llegad pronto para dedicarle 3-4 h.",
-        "No metáis la furgo al centro de Stuttgart (tráfico y cuestas): dejadla en Cannstatter Wasen y subid en S-Bahn.",
+        "Decidid cómo ir al museo: hay parking junto al edificio (furgo) o S-Bahn desde Cannstatter Wasen — las dos opciones están en la parada del museo.",
       ],
       stops: [
         {
           id: "d4-frontera",
           type: "warning",
+          when: "Mañana",
           title: "Entráis en Alemania",
           desc: "¡Bienvenidos! A partir de aquí necesitáis la pegatina verde (Umweltplakette) para entrar en zonas de bajas emisiones (Stuttgart, Múnich…). Ver sección Logística.",
           tips: ["En la Autobahn sin límite, mirad DOS veces el retrovisor antes de adelantar: vienen coches a 200 km/h."],
@@ -322,6 +352,7 @@ export const trip: Trip = {
         {
           id: "d4-gengenbach",
           type: "visit",
+          when: "Mañana",
           title: "Gengenbach",
           desc: "Pueblo de cuento absoluto (se usó como escenario de 'Charlie y la Fábrica de Chocolate'). Casco antiguo de entramado, muy tranquilo.",
           order: "Aparcar a la entrada → plaza del mercado → puerta Kinzigtor.",
@@ -331,6 +362,7 @@ export const trip: Trip = {
         {
           id: "d4-triberg",
           type: "visit",
+          when: "Mediodía",
           title: "Triberg · Cascadas y cucos",
           desc: "Las cascadas más altas de Alemania accesibles a pie y los relojes de cuco más grandes del mundo. Turístico pero resultón. Si os cansa, alternativa escénica: la carretera B500 (Schwarzwaldhochstraße) y el Mummelsee.",
           order: "Parking a la entrada → recorrido de las cascadas (subida suave) → tiendas de cucos.",
@@ -344,13 +376,14 @@ export const trip: Trip = {
         {
           id: "d4-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Stuttgart (Cannstatter Wasen)",
           desc: "Explanada gigante de la feria, muy cerca del centro. Sin lujos pero casi siempre hay sitio y estáis en la ciudad.",
           parking: {
             name: "Stellplatz Cannstatter Wasen",
             mapsUrl: maps("Wohnmobil Stellplatz Cannstatter Wasen Stuttgart"),
             park4night: true,
-            note: "Desde aquí podéis ir al museo en transporte público sin mover la furgo.",
+            note: "Mañana decidís: seguir en furgo hasta el parking del museo, o dejarla aquí y coger el S-Bahn.",
           },
         },
       ],
@@ -361,6 +394,7 @@ export const trip: Trip = {
       n: 5,
       weekday: "Miércoles",
       phase: "Selva Negra + Motor",
+      route: "Museo Porsche (Stuttgart) → Rothenburg (noche)",
       title: "Ingeniería y medievo",
       summary: "Museo Porsche ➔ Rothenburg",
       cover: img("photo-1535970793482-07de93762dc4"),
@@ -372,13 +406,18 @@ export const trip: Trip = {
         {
           id: "d5-porsche",
           type: "visit",
+          when: "Mañana",
           title: "Museo Porsche",
-          desc: "El templo del motor: arquitectura brutal y una colección impresionante. Dedicadle 3-4 h. (Bonus para fanáticos: el Museo Mercedes-Benz también está en Stuttgart y con la entrada de uno tenéis 25% de descuento en el otro.)",
+          desc: "El templo del motor: arquitectura brutal y una colección impresionante. Dedicadle 3-4 h. Como salís hacia Rothenburg justo después, tiene sentido ir con la furgo. (Bonus para fanáticos: el Museo Mercedes-Benz también está en Stuttgart y con la entrada de uno tenéis 25% de descuento en el otro.)",
           order: "Llegad a la apertura (9:00) para evitar grupos.",
           cost: [
             { label: "Entrada adulto", amount: "~12 € (reducida ~6 €)" },
+            { label: "Parking junto al museo", amount: "~10-15 €" },
           ],
-          transport: "Desde Cannstatter Wasen, S-Bahn hasta la parada Neuwirtshaus/Porscheplatz (justo en la puerta). Evita mover la furgo por el tráfico y las cuestas de Stuttgart.",
+          access: {
+            recommended: "En furgo: el museo tiene un garaje de pago justo al lado, y si no cabéis hay una zona específica para autocaravanas a ~950 m. Como después seguís ruta hacia Rothenburg, os ahorráis volver a por la furgo.",
+            alt: "En transporte público: si preferís no lidiar con el garaje, dejad la furgo en Cannstatter Wasen y coged el S-Bahn hasta Neuwirtshaus/Porscheplatz (justo en la puerta), y volved a por ella después.",
+          },
           tips: [
             "⚠️ CIERRA LOS LUNES. En esta ruta cae en miércoles, perfecto.",
             "Horario: 9:00–18:00 (taquilla hasta 17:30).",
@@ -388,6 +427,7 @@ export const trip: Trip = {
         {
           id: "d5-rothenburg-noche",
           type: "visit",
+          when: "Noche",
           title: "Rothenburg ob der Tauber (de noche)",
           desc: "La joya de la Ruta Romántica: el pueblo medieval mejor conservado de Alemania. Murallas transitables, casas de colores, adoquines. De noche, cuando se van los autobuses, es mágico.",
           order: "Plönlein (el rincón más fotografiado) → Marktplatz → paseo por la muralla.",
@@ -397,6 +437,7 @@ export const trip: Trip = {
         {
           id: "d5-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Rothenburg (Parkplatz P2)",
           desc: "Parking mixto con zona reservada para autocaravanas, baños públicos y máquina de pago. Muy céntrico: perfecto para el paseo nocturno sin reservar.",
           parking: {
@@ -414,6 +455,7 @@ export const trip: Trip = {
       n: 6,
       weekday: "Jueves",
       phase: "Franconia + Baviera",
+      route: "Rothenburg (mañana) → Bamberg → Núremberg (noche)",
       title: "El peso de la historia",
       summary: "Rothenburg ➔ Bamberg ➔ Núremberg",
       cover: img("photo-1589881738899-878f9c1c2c1e"),
@@ -422,6 +464,7 @@ export const trip: Trip = {
         {
           id: "d6-rothenburg-manana",
           type: "visit",
+          when: "Mañana",
           title: "Mañana en Rothenburg",
           desc: "Desayuno tranquilo y subid a la muralla con la luz de la mañana. Comprad una 'Schneeball' (bola de nieve), el dulce típico.",
           clothing: "Calzado cómodo para la muralla.",
@@ -430,6 +473,7 @@ export const trip: Trip = {
         {
           id: "d6-bamberg",
           type: "visit",
+          when: "Mediodía",
           title: "Bamberg (por defecto)",
           desc: "Uno de los cascos más bonitos de Alemania (UNESCO): el Altes Rathaus plantado sobre una isla en el río, la 'Pequeña Venecia' de casas de pescadores y la catedral. Cuna de la cerveza ahumada (Rauchbier).",
           order: "Altes Rathaus → Klein Venedig → catedral → una Rauchbier en Schlenkerla.",
@@ -442,6 +486,7 @@ export const trip: Trip = {
         {
           id: "d6-nuremberg",
           type: "visit",
+          when: "Tarde",
           title: "Núremberg · Casco antiguo",
           desc: "Murallas, castillo imperial en lo alto y casco antiguo peatonal precioso. Paseo de tarde.",
           order: "Kaiserburg (castillo imperial) → Hauptmarkt → casa de Durero.",
@@ -450,6 +495,7 @@ export const trip: Trip = {
         {
           id: "d6-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Volkspark Marienberg",
           desc: "Parking público tranquilo bajo los árboles donde se toleran muchas autocaravanas. Sin servicios pero con mucha sombra.",
           parking: {
@@ -466,6 +512,7 @@ export const trip: Trip = {
       n: 7,
       weekday: "Viernes",
       phase: "Franconia + Baviera",
+      route: "Núremberg → Múnich (con Regensburg opcional de camino)",
       title: "Rumbo a la capital bávara",
       summary: "Núremberg ➔ Múnich",
       cover: img("photo-1595867865312-7c0b57a1fd90"),
@@ -478,6 +525,7 @@ export const trip: Trip = {
         {
           id: "d7-zeppelin",
           type: "visit",
+          when: "Mañana",
           title: "Campo Zeppelín (opcional)",
           desc: "Para amantes de la historia del s. XX: la arquitectura megalómana del régimen nazi y el centro de documentación. Impresionante y escalofriante.",
           cost: [{ label: "Centro de documentación", amount: "~6 €" }],
@@ -486,6 +534,7 @@ export const trip: Trip = {
         {
           id: "d7-regensburg",
           type: "visit",
+          when: "Mediodía",
           title: "Regensburg (alternativa a Bamberg)",
           desc: "Si NO hicisteis Bamberg, parad aquí de camino: la mayor ciudad medieval intacta de Alemania sobre el Danubio. Puente de piedra del s. XII y la Wurstkuchl, la salchichería más antigua del mundo.",
           order: "Puente de piedra (Steinerne Brücke) → catedral → comer en la Wurstkuchl.",
@@ -495,12 +544,14 @@ export const trip: Trip = {
         {
           id: "d7-warning-munich",
           type: "warning",
+          when: "Tarde",
           title: "Pegatina verde para Múnich",
           desc: "Múnich tiene zona de bajas emisiones (Umweltzone). Necesitáis la pegatina verde para entrar al centro; multa 100 € si no. Ver Logística.",
         },
         {
           id: "d7-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Múnich (Camp base, noche 1)",
           desc: "Camping Thalkirchen: el mítico, junto al río Isar y el zoo, con metro al centro. No es lujoso pero es 'el sitio'. En agosto llega pronto (antes de 16-17h).",
           parking: {
@@ -518,6 +569,7 @@ export const trip: Trip = {
       n: 8,
       weekday: "Sábado",
       phase: "Franconia + Baviera",
+      route: "Múnich: Marienplatz → Eisbach → Isar → Biergarten",
       title: "Múnich vibes",
       summary: "Día completo SIN conducir",
       cover: img("photo-1517942464319-21453dd8d824"),
@@ -529,14 +581,19 @@ export const trip: Trip = {
         {
           id: "d8-transporte",
           type: "transport",
+          when: "Mañana",
           title: "Al centro sin la furgo",
-          desc: "Dejad la furgo en el camping y coged el metro (U3 desde Thalkirchen) o la bici hasta Marienplatz. Día de disfrutar sin conducir.",
+          desc: "Dejad la furgo aparcada en el camping todo el día: el centro de Múnich es un lío de tráfico y zona de bajas emisiones, así que hoy no compensa moverla.",
           cost: [{ label: "Metro (billete día / grupo)", amount: "~9 € individual · ~17 € grupo hasta 5" }],
-          transport: "U3 Thalkirchen → Marienplatz (~15 min).",
+          access: {
+            recommended: "Metro U3 desde Thalkirchen hasta Marienplatz (~15 min), directo y sin complicaciones.",
+            alt: "En bici, si el camping alquila o lleváis las vuestras: Múnich es muy llana y con buenos carriles bici.",
+          },
         },
         {
           id: "d8-centro",
           type: "visit",
+          when: "Mañana",
           title: "Marienplatz y Viktualienmarkt",
           desc: "El corazón de Múnich: el carillón (Glockenspiel) del ayuntamiento nuevo y el mercado gourmet de Viktualienmarkt para picar.",
           order: "Glockenspiel (suena 11:00 y 12:00) → Viktualienmarkt → Frauenkirche.",
@@ -545,6 +602,7 @@ export const trip: Trip = {
         {
           id: "d8-eisbach",
           type: "visit",
+          when: "Mediodía",
           title: "Ola del Eisbach + Jardín Inglés",
           desc: "Surfistas surfeando una ola fija en pleno centro, en el Jardín Inglés. Hipnótico. El parque es enorme y perfecto para tumbarse.",
           mapsUrl: maps("Eisbachwelle München"),
@@ -552,6 +610,7 @@ export const trip: Trip = {
         {
           id: "d8-isar",
           type: "swim",
+          when: "Tarde",
           title: "Baño en el Isar",
           desc: "El plan local por excelencia en verano: tirarse al río Isar y dejarse llevar por la corriente. Divertido y social.",
           clothing: "Bañador y chanclas. El agua baja fresca y con fuerza: cuidado con la corriente.",
@@ -561,6 +620,7 @@ export const trip: Trip = {
         {
           id: "d8-biergarten",
           type: "eat",
+          when: "Noche",
           title: "Biergarten Torre China / Hofbräuhaus",
           desc: "Cerrad el día con codillo, Pretzel y una cerveza de litro (Maß) en el Biergarten de la Torre China del Jardín Inglés, o en el turístico Hofbräuhaus.",
           cost: [{ label: "Maß (1 L de cerveza)", amount: "~10-12 €" }],
@@ -569,6 +629,7 @@ export const trip: Trip = {
         {
           id: "d8-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Múnich (noche 2)",
           desc: "Repetís campo base. Descanso merecido.",
           parking: {
@@ -584,6 +645,7 @@ export const trip: Trip = {
       n: 9,
       weekday: "Domingo",
       phase: "Alpes y lagos",
+      route: "Múnich → Chiemsee (opcional) → Salzburgo (noche)",
       title: "Sonrisas y lágrimas",
       summary: "Múnich ➔ Salzburgo (Austria)",
       cover: img("photo-1516550893923-42d28e5677af"),
@@ -596,12 +658,14 @@ export const trip: Trip = {
         {
           id: "d9-vineta",
           type: "warning",
+          when: "Mañana",
           title: "Viñeta austriaca",
           desc: "Para llegar a Salzburgo pisaréis autopista austriaca. Comprad la viñeta de 10 días (12,80 € en 2026): digital en shop.asfinag.at con validez inmediata, o pegatina en gasolinera antes de la frontera. Ver Logística.",
         },
         {
           id: "d9-chiemsee",
           type: "swim",
+          when: "Mediodía",
           title: "Lago Chiemsee (opcional)",
           desc: "A medio camino, buen sitio para estirar las piernas o darse un baño en el 'mar bávaro'.",
           clothing: "Bañador si apetece chapuzón.",
@@ -610,6 +674,7 @@ export const trip: Trip = {
         {
           id: "d9-salzburgo",
           type: "visit",
+          when: "Tarde",
           title: "Salzburgo",
           desc: "La ciudad de Mozart y de 'Sonrisas y lágrimas'. Fortaleza blanca dominando la ciudad, calles señoriales y jardines de Mirabell.",
           order: "Getreidegasse (calle comercial histórica) → jardines de Mirabell → subida a la fortaleza Hohensalzburg (funicular) para las vistas.",
@@ -620,6 +685,7 @@ export const trip: Trip = {
         {
           id: "d9-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Salzburgo / Berchtesgaden",
           desc: "Área automática en Salzburgo, o avanzad ya hacia Berchtesgaden para tener el Königssee al lado mañana.",
           parking: {
@@ -637,6 +703,7 @@ export const trip: Trip = {
       n: 10,
       weekday: "Lunes",
       phase: "Alpes y lagos",
+      route: "Königssee + Obersee → Ramsau → Hintersee",
       title: "El fiordo alpino",
       summary: "Königssee, Ramsau y Hintersee",
       cover: img("photo-1550587060-1d37c2c6174f"),
@@ -645,6 +712,7 @@ export const trip: Trip = {
         {
           id: "d10-koenigssee",
           type: "visit",
+          when: "Mañana",
           title: "Königssee + Obersee",
           desc: "El lago más espectacular de Alemania, encajonado entre paredes verticales (recuerda a Noruega). Barco eléctrico silencioso hasta la iglesia de St. Bartholomä y, al fondo, el Obersee.",
           order: "Llegad temprano (antes de 9:30) → barco hasta Salet → caminata corta al Obersee (agua como un espejo) → vuelta parando en St. Bartholomä.",
@@ -660,6 +728,7 @@ export const trip: Trip = {
         {
           id: "d10-ramsau",
           type: "visit",
+          when: "Mediodía",
           title: "Ramsau · Iglesia de St. Sebastian",
           desc: "LA postal icónica de Baviera: la iglesita de Ramsau con el arroyo Ramsauer Ache y el macizo del Watzmann de fondo. A 15-20 min del Königssee.",
           order: "Foto desde el puentecito de madera detrás de la iglesia.",
@@ -668,6 +737,7 @@ export const trip: Trip = {
         {
           id: "d10-hintersee",
           type: "walk",
+          when: "Tarde",
           title: "Hintersee y Zauberwald",
           desc: "Un lago pequeño y de ensueño con el 'bosque mágico' (Zauberwald). Paseo llano y fácil bordeando el agua, ideal para desconectar.",
           clothing: "Calzado cómodo; repelente de mosquitos al atardecer.",
@@ -676,6 +746,7 @@ export const trip: Trip = {
         {
           id: "d10-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Berchtesgaden",
           desc: "Zona tranquila para dormir cerca de todo lo del día.",
           parking: {
@@ -692,6 +763,7 @@ export const trip: Trip = {
       n: 11,
       weekday: "Martes",
       phase: "Alpes y lagos",
+      route: "Walchensee → Geroldsee → Eibsee (noche en Garmisch)",
       title: "Lagos turquesa",
       summary: "Walchensee + Geroldsee ➔ Eibsee",
       cover: img("photo-1576510229880-49b27868d89d"),
@@ -705,6 +777,7 @@ export const trip: Trip = {
         {
           id: "d11-walchensee",
           type: "swim",
+          when: "Mañana",
           title: "Walchensee",
           desc: "El mejor lago turquesa para bañarse de la ruta, de camino al oeste por la Alpenstraße. Aguas azul intenso rodeadas de montañas.",
           order: "Parad en la orilla de Urfeld o Walchensee (pueblo) → baño y picnic.",
@@ -715,6 +788,7 @@ export const trip: Trip = {
         {
           id: "d11-geroldsee",
           type: "visit",
+          when: "Mediodía",
           title: "Geroldsee (Wagenbrüchsee)",
           desc: "Parada foto rápida: pequeño lago con el reflejo perfecto del macizo del Karwendel. Cerca de Krün/Gerold.",
           clothing: "Nada especial; 20 min de parada.",
@@ -723,6 +797,7 @@ export const trip: Trip = {
         {
           id: "d11-eibsee",
           type: "swim",
+          when: "Tarde",
           title: "Eibsee",
           desc: "El 'Caribe bávaro': aguas turquesas cristalinas al pie del Zugspitze (la montaña más alta de Alemania). De los mejores baños del viaje.",
           order: "Parking del Eibsee → sendero circular fácil (~7 km) o directamente a bañarse en una de sus calas.",
@@ -737,6 +812,7 @@ export const trip: Trip = {
         {
           id: "d11-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Garmisch / Grainau",
           desc: "Dormid cerca de Garmisch para tener la Partnachklamm a primera hora mañana.",
           parking: {
@@ -753,6 +829,7 @@ export const trip: Trip = {
       n: 12,
       weekday: "Miércoles",
       phase: "Alpes y lagos",
+      route: "Partnachklamm (Garmisch) → Neuschwanstein → Alpsee → Füssen (noche)",
       title: "Disney en la vida real",
       summary: "Partnachklamm ➔ Neuschwanstein",
       cover: img("photo-1533052664743-2754913b0c1c"),
@@ -764,6 +841,7 @@ export const trip: Trip = {
         {
           id: "d12-partnachklamm",
           type: "walk",
+          when: "Mañana",
           title: "Partnachklamm",
           desc: "Garganta espectacular: el río Partnach ha excavado un desfiladero de 700 m con paredes de hasta 80 m, cascadas y túneles tallados en la roca. Se recorre por un sendero pegado a la pared.",
           order: "Aparcar en el Skistadion (estadio olímpico) → ~20-25 min de paseo llano hasta la entrada → ~20-30 min por la garganta → volver.",
@@ -778,6 +856,7 @@ export const trip: Trip = {
         {
           id: "d12-neuschwanstein",
           type: "visit",
+          when: "Mediodía",
           title: "Neuschwanstein (exterior) + Marienbrücke",
           desc: "El castillo del 'Rey Loco' Luis II, el que inspiró a Disney. Vais a verlo por fuera (sin reserva de interior). La foto icónica es desde el puente Marienbrücke.",
           order: "Aparcar en Hohenschwangau → subir andando (~40 min) o en bus/coche de caballos → Marienbrücke para la foto.",
@@ -795,6 +874,7 @@ export const trip: Trip = {
         {
           id: "d12-alpsee",
           type: "swim",
+          when: "Tarde",
           title: "Alpsee",
           desc: "El lago cristalino que está JUSTO debajo de los castillos. Aguas limpísimas y praderas para tumbarse: mejor baño que el Forggensee y sin moverte de la zona.",
           clothing: "Bañador y toalla.",
@@ -803,6 +883,7 @@ export const trip: Trip = {
         {
           id: "d12-lechfall",
           type: "visit",
+          when: "Tarde",
           title: "Lechfall (Füssen)",
           desc: "Parada de 10 min al borde de Füssen: una cascada y garganta de agua turquesa con un puente para la foto.",
           mapsUrl: maps("Lechfall Füssen"),
@@ -810,6 +891,7 @@ export const trip: Trip = {
         {
           id: "d12-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Füssen",
           desc: "Área grande con supermercados cerca. Suele haber rotación; llegad por la tarde.",
           parking: {
@@ -827,6 +909,7 @@ export const trip: Trip = {
       n: 13,
       weekday: "Jueves",
       phase: "El retorno",
+      route: "Lindau → cruce por Bregenz → Francia (noche)",
       title: "El gran lago",
       summary: "Lindau ➔ Francia",
       cover: img("photo-1656334381540-f222d65b1222"),
@@ -835,6 +918,7 @@ export const trip: Trip = {
         {
           id: "d13-lindau",
           type: "visit",
+          when: "Mañana",
           title: "Lindau",
           desc: "Isla-ciudad en el Lago Constanza (Bodensee). La entrada al puerto con el león de Baviera y el faro es preciosa. Paseo y despedida de Alemania.",
           order: "Paseo del puerto (león + faro) → casco antiguo → café con vistas.",
@@ -843,12 +927,14 @@ export const trip: Trip = {
         {
           id: "d13-suiza-warning",
           type: "warning",
+          when: "Mediodía",
           title: "Cruzad por Bregenz, NO por Suiza",
           desc: "Para volver, cruzad por Bregenz (Austria) en lugar de meteros en autopista suiza: la viñeta suiza cuesta 40 € y solo es anual. Con la viñeta austriaca que ya tenéis os basta.",
         },
         {
           id: "d13-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Besançon / Beaune",
           desc: "Parada técnica a medio camino en Francia.",
           parking: {
@@ -865,6 +951,7 @@ export const trip: Trip = {
       n: 14,
       weekday: "Viernes",
       phase: "El retorno",
+      route: "Cruce de Francia (Auvernia opcional) → Landas (noche)",
       title: "Rumbo al Atlántico",
       summary: "Francia → Landas",
       cover:
@@ -874,6 +961,7 @@ export const trip: Trip = {
         {
           id: "d14-ruta",
           type: "drive",
+          when: "Mañana",
           title: "Bajada hacia la costa",
           desc: "Día de kilómetros cruzando Francia hasta las Landas. Turnaos al volante y parad a comer con calma.",
           tips: [
@@ -883,6 +971,7 @@ export const trip: Trip = {
         {
           id: "d14-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Burdeos / Landas",
           desc: "Dormid cerca de Burdeos o ya en las Landas para tener Hossegor a un paso mañana.",
           parking: {
@@ -899,6 +988,7 @@ export const trip: Trip = {
       n: 15,
       weekday: "Sábado",
       phase: "El retorno",
+      route: "Landas → Hossegor (tarde-noche)",
       title: "Relax final",
       summary: "Landas → Hossegor",
       cover:
@@ -908,6 +998,7 @@ export const trip: Trip = {
         {
           id: "d15-hossegor",
           type: "relax",
+          when: "Tarde",
           title: "Hossegor",
           desc: "Meca del surf en las Landas: playas enormes, pinares y ambiente relajado. Llegáis por la tarde para disfrutar la tarde-noche sin prisa.",
           order: "Paseo por la playa central → atardecer → cena tranquila en el pueblo.",
@@ -917,6 +1008,7 @@ export const trip: Trip = {
         {
           id: "d15-cena",
           type: "eat",
+          when: "Noche",
           title: "Cena de despedida",
           desc: "Última cena todos juntos para cerrar el viajazo. Buen ambiente y marisco en Hossegor / Capbreton.",
           mapsUrl: maps("restaurantes Hossegor Capbreton"),
@@ -924,6 +1016,7 @@ export const trip: Trip = {
         {
           id: "d15-pernocta",
           type: "sleep",
+          when: "Noche",
           title: "Pernocta: Hossegor",
           desc: "Área o camping en Hossegor / Seignosse. En agosto conviene llegar con tiempo.",
           parking: {
@@ -940,6 +1033,7 @@ export const trip: Trip = {
       n: 16,
       weekday: "Domingo",
       phase: "El retorno",
+      route: "Hossegor (mañana) → Casa",
       title: "Home sweet home",
       summary: "Hossegor → Casa",
       cover:
@@ -949,12 +1043,14 @@ export const trip: Trip = {
         {
           id: "d16-manana",
           type: "relax",
+          when: "Mañana",
           title: "Mañana en Hossegor",
           desc: "Último baño o café con vistas antes de emprender la vuelta a casa sin prisa.",
         },
         {
           id: "d16-final",
           type: "drive",
+          when: "Mediodía",
           title: "Vuelta a casa",
           desc: "Tramo final cruzando la frontera. Llegada a casa por la tarde.",
           tips: ["Descargar, limpiar la furgo y… ¡a presumir del viajazo! 🚐💨"],
