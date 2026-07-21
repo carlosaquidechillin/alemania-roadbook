@@ -8,6 +8,10 @@ const withPWA = withPWAInit({
   disable: process.env.NODE_ENV === "development",
   workboxOptions: {
     disableDevLogs: true,
+    // Que el nuevo service worker se active y tome el control sin esperar,
+    // para que las actualizaciones lleguen al móvil sin reinstalar la PWA.
+    skipWaiting: true,
+    clientsClaim: true,
     runtimeCaching: [
       {
         // Cache remote cover/stop images so the guide works offline after first load
