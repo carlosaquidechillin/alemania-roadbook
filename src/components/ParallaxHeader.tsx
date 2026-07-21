@@ -21,13 +21,25 @@ export function ParallaxHeader({
   const [y, setY] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setY(window.scrollY);
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        setY(window.scrollY);
+        raf = 0;
+      });
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   const dark = Math.min(0.92, 0.3 + (y / 380) * 0.62);
+  // Sin desplazamiento vertical (marea). Solo un ligero zoom al hacer scroll.
+  const scale = 1.06 + Math.min(y / 1600, 0.16);
 
   return (
     <>
@@ -38,7 +50,7 @@ export function ParallaxHeader({
           src={image}
           alt={alt}
           className="w-full h-full object-cover will-change-transform"
-          style={{ transform: `translateY(${Math.min(y * 0.2, 120)}px) scale(1.12)` }}
+          style={{ transform: `scale(${scale})` }}
         />
         <div
           className="absolute inset-0"
