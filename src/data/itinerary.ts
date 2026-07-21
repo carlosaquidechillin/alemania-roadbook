@@ -52,6 +52,8 @@ export interface Stop {
   transport?: string;
   /** Cómo llegar/moverse cuando hay disyuntiva real furgo-vs-transporte. */
   access?: AccessOptions;
+  /** Nota de ducha exterior de la furgo (solo en paradas confirmadas como buen sitio). */
+  shower?: string;
   mapsUrl?: string;
   tips?: string[];
 }
@@ -480,6 +482,7 @@ export const trip: Trip = {
           cost: [{ label: "Rauchbier (Schlenkerla)", amount: "~4-5 €" }],
           tips: [
             "🃏 COMODÍN: si ese día vais cansados, saltad Bamberg y meted Regensburg mañana de camino a Múnich (queda casi de paso).",
+            "El centro histórico es incómodo para entrar con la furgo: dejadla en uno de los aparcamientos periféricos bien señalizados, el casco se recorre andando.",
           ],
           mapsUrl: maps("Altes Rathaus Bamberg"),
         },
@@ -741,6 +744,7 @@ export const trip: Trip = {
           title: "Hintersee y Zauberwald",
           desc: "Un lago pequeño y de ensueño con el 'bosque mágico' (Zauberwald). Paseo llano y fácil bordeando el agua, ideal para desconectar.",
           clothing: "Calzado cómodo; repelente de mosquitos al atardecer.",
+          shower: "Es un valle tranquilo y poco vigilado: buen sitio para una ducha exterior discreta si vais con calma y no hay mucha gente alrededor.",
           mapsUrl: maps("Hintersee Ramsau bei Berchtesgaden"),
         },
         {
@@ -783,6 +787,7 @@ export const trip: Trip = {
           order: "Parad en la orilla de Urfeld o Walchensee (pueblo) → baño y picnic.",
           cost: [{ label: "Parking orilla", amount: "~3-5 €" }],
           clothing: "Bañador, toalla y chanclas. El agua es fría pero deliciosa en agosto.",
+          shower: "Es zona de baño público, así que un aclarado rápido con la ducha exterior de la furgo tras el chapuzón pasa totalmente desapercibido.",
           mapsUrl: maps("Walchensee Baden Urfeld"),
         },
         {
@@ -806,6 +811,7 @@ export const trip: Trip = {
             { label: "Barca/paddle surf (opcional)", amount: "~15-20 €/h" },
           ],
           clothing: "Bañador. Alquilad una barca de remos o paddle surf si apetece.",
+          shower: "Buena zona para aprovechar la ducha exterior después del baño: es un entorno de recreo con ambiente relajado, nadie se extraña de un aclarado rápido junto a la furgo.",
           tips: ["Opción cara pero brutal: subir al Zugspitze en teleférico desde el Eibsee (~66 €)."],
           mapsUrl: maps("Eibsee Grainau"),
         },
@@ -878,6 +884,7 @@ export const trip: Trip = {
           title: "Alpsee",
           desc: "El lago cristalino que está JUSTO debajo de los castillos. Aguas limpísimas y praderas para tumbarse: mejor baño que el Forggensee y sin moverte de la zona.",
           clothing: "Bañador y toalla.",
+          shower: "Tras el baño podéis aprovechar la ducha exterior de la furgo en la zona de césped junto al lago, sin llamar la atención.",
           mapsUrl: maps("Alpsee Hohenschwangau"),
         },
         {
@@ -922,6 +929,7 @@ export const trip: Trip = {
           title: "Lindau",
           desc: "Isla-ciudad en el Lago Constanza (Bodensee). La entrada al puerto con el león de Baviera y el faro es preciosa. Paseo y despedida de Alemania.",
           order: "Paseo del puerto (león + faro) → casco antiguo → café con vistas.",
+          shower: "El Lago Constanza tiene muchas Badestellen (zonas de baño públicas): daos un chapuzón y aprovechad para la ducha exterior de la furgo, es lo más normal del mundo en verano por aquí.",
           mapsUrl: maps("Lindau Hafen Löwe Leuchtturm"),
         },
         {

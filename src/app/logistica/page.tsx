@@ -101,6 +101,40 @@ export default function Logistica() {
           </ul>
         </Section>
 
+        <Section emoji="🚿" title="Duchas">
+          <p>
+            La mayoría de Stellplätze ofrecen agua, vaciado y electricidad, pero{" "}
+            <b className="text-white">rara vez ducha</b>. Los campings sí (además de
+            lavandería). Estrategia sencilla: 4-5 noches en Stellplatz + 1 noche de camping
+            &quot;de reseteo&quot; cada 4-5 días (ducha larga, colada, llenar/vaciar depósitos)
+            — encaja bien en la Selva Negra o el Lago Constanza.
+          </p>
+          <p>
+            <b className="text-white">Piscinas municipales (Schwimmbad)</b>: 4-8 €, duchas
+            calientes incluidas. Totalmente normal que las use gente de camper, no llama la
+            atención.
+          </p>
+          <div>
+            <p className="font-semibold text-white">Ducha exterior de la furgo — dónde sí</p>
+            <p className="mt-1">
+              Tras el baño en <b className="text-white">Walchensee</b>,{" "}
+              <b className="text-white">Eibsee</b>, <b className="text-white">Alpsee</b>,{" "}
+              <b className="text-white">Hintersee</b> y las Badestellen del{" "}
+              <b className="text-white">Lago Constanza (Lindau)</b>: son lagos públicos con
+              ambiente relajado, un aclarado rápido pasa desapercibido. Están marcados en sus
+              paradas correspondientes del itinerario.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Dónde NO</p>
+            <p className="mt-1">
+              Stellplätze urbanos (Stuttgart, Núremberg, Múnich), parking de castillos
+              (Neuschwanstein/Hohenschwangau) y el Königssee en temporada alta: son zonas
+              vigiladas o reguladas donde ducharse fuera sí llama la atención.
+            </p>
+          </div>
+        </Section>
+
         <Section emoji="🎒" title="Qué meter en la furgo">
           <ul className="list-disc pl-5 space-y-1.5">
             <li>👕 <b className="text-white">Ropa</b>: bañador y chanclas, pero también sudadera y chubasquero (los Alpes refrescan de noche).</li>
@@ -133,11 +167,23 @@ export default function Logistica() {
         <Section emoji="💰" title="Presupuesto orientativo (por persona)">
           <ul className="list-disc pl-5 space-y-1.5">
             <li>Gasóleo (compartido entre 2 furgos): ~250-350 € cada uno.</li>
-            <li>Pernoctas (mix stellplatz/camping): ~10-20 €/noche.</li>
             <li>Comidas (50% furgo / 50% restaurante): ~25-35 €/día.</li>
             <li>Entradas y barcos (Königssee, Porsche, Partnachklamm…): ~80-120 € total.</li>
             <li>Viñetas/pegatinas: ~20-25 €.</li>
           </ul>
+          <div>
+            <p className="font-semibold text-white mt-1">Pernoctas, por tipo</p>
+            <ul className="list-disc pl-5 mt-1 space-y-1">
+              <li>Stellplatz básico: <b className="text-white">10-20 €</b>.</li>
+              <li>Stellplatz urbano popular (Múnich, Núremberg, Salzburgo): <b className="text-white">15-30 €</b>.</li>
+              <li>Camping completo (ducha/lavandería): <b className="text-white">30-50 €</b>.</li>
+              <li>Electricidad (si no va incluida): <b className="text-white">+3-8 €</b>.</li>
+            </ul>
+            <p className="text-[13px] text-slate-500 mt-2">
+              Para las 16 noches: escenario económico ~180-250 €, escenario cómodo
+              (mezclando varios campings) ~300-450 €.
+            </p>
+          </div>
         </Section>
       </div>
 

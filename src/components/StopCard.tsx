@@ -150,6 +150,16 @@ export function StopCard({
           </div>
         )}
 
+        {stop.shower && (
+          <div className="flex gap-2.5 text-sm">
+            <Icon name="shower" className="w-4 h-4 mt-0.5 shrink-0 text-aqua-300" />
+            <p className="text-slate-300 leading-relaxed">
+              <span className="font-semibold text-aqua-200">Ducha exterior: </span>
+              {stop.shower}
+            </p>
+          </div>
+        )}
+
         {stop.tips && stop.tips.length > 0 && (
           <div className="space-y-1.5">
             {stop.tips.map((t, i) => (

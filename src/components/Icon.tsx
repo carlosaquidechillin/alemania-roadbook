@@ -93,6 +93,14 @@ const paths: Record<string, ReactNode> = {
       <path d="M8.5 10.5h7M8.5 13.5h4" />
     </>
   ),
+  shower: (
+    <>
+      <path d="M6 9h11a3 3 0 0 1 3 3" />
+      <path d="M4.5 9V6.5A2.5 2.5 0 0 1 7 4h1" />
+      <rect x="4" y="9" width="14" height="3" rx="1" />
+      <path d="M7.5 15v1.5M11 15v2M14.5 15v1.5" />
+    </>
+  ),
   trash: (
     <>
       <path d="M4 7h16" />
