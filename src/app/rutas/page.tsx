@@ -25,7 +25,7 @@ export default function Rutas() {
             href={leg.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 active:scale-[0.99] transition"
+            className="flex items-center gap-4 rounded-2xl bg-white/5 p-4 active:scale-[0.99] transition"
           >
             <span className="text-3xl">{leg.emoji}</span>
             <div className="flex-1 min-w-0">

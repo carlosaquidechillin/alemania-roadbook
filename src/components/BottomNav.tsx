@@ -45,7 +45,7 @@ export function BottomNav() {
           <Link
             href="/notas"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3 active:scale-[0.99] transition"
+            className="flex items-center gap-3 rounded-2xl bg-white/5 px-4 py-3 active:scale-[0.99] transition"
           >
             <Icon name="comment" className="w-5 h-5 text-coral-400" />
             <span className="font-semibold text-sm">Todas las notas</span>

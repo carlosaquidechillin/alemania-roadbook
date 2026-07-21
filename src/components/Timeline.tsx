@@ -7,6 +7,7 @@ import { formatDayDate, todayDayIndex } from "@/lib/dates";
 import { ProgressBar } from "./ProgressBar";
 import { CheckButton } from "./CheckButton";
 import { Icon } from "./Icon";
+import { ParallaxHeader } from "./ParallaxHeader";
 
 export function Timeline() {
   const { checks, setMany } = useChecklist();
@@ -21,16 +22,13 @@ export function Timeline() {
 
   return (
     <main className="min-h-screen pb-28">
-      {/* HERO */}
-      <header className="relative h-[26rem] w-full overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={HERO_IMAGE}
-          alt="Alpes de Berchtesgaden"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink" />
-        <div className="absolute bottom-0 left-0 right-0 p-5">
+      {/* HERO con parallax */}
+      <ParallaxHeader
+        image={HERO_IMAGE}
+        alt="Alpes de Berchtesgaden"
+        heightClass="h-[26rem]"
+      >
+        <div className="p-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-coral-400 mb-1">
             Verano 2026 · Camper
           </p>
@@ -52,10 +50,10 @@ export function Timeline() {
             <ProgressBar percent={percent} />
           </div>
         </div>
-      </header>
+      </ParallaxHeader>
 
-      {/* TIMELINE */}
-      <ol className="px-4 mt-6">
+      {/* TIMELINE (pasa por encima de la imagen) */}
+      <ol className="relative z-10 bg-ink rounded-t-3xl -mt-6 pt-6 px-4">
         {trip.days.map((day) => {
           const done = isDayDone(day);
           const isToday = today === day.n;
@@ -74,7 +72,7 @@ export function Timeline() {
                 } ${isToday ? "ring-4 ring-aqua-400/25" : ""}`}
               />
 
-              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5">
+              <div className="relative rounded-3xl overflow-hidden bg-white/5">
                 <Link href={`/dia/${day.id}`} className="block">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

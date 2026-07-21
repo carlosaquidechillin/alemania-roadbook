@@ -1,78 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import type { Note } from "@/hooks/useNotes";
 import { Icon } from "./Icon";
-
-function CommentItem({
-  note,
-  onDelete,
-}: {
-  note: Note;
-  onDelete: (id: string) => void;
-}) {
-  const [armed, setArmed] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const start = () => {
-    timer.current = setTimeout(() => setArmed(true), 450);
-  };
-  const cancel = () => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-      timer.current = null;
-    }
-  };
-
-  return (
-    <div
-      onPointerDown={start}
-      onPointerUp={cancel}
-      onPointerLeave={cancel}
-      onPointerMove={cancel}
-      onPointerCancel={cancel}
-      onContextMenu={(e) => e.preventDefault()}
-      className={`select-none rounded-2xl border px-3.5 py-2.5 transition ${
-        armed
-          ? "border-coral-500/60 bg-coral-500/10"
-          : "border-white/10 bg-white/5"
-      }`}
-    >
-      <p className="text-sm text-slate-100 whitespace-pre-wrap">{note.body}</p>
-      <div className="flex items-center justify-between mt-1 gap-2">
-        <p className="text-[10px] text-slate-500">
-          {new Date(note.created_at).toLocaleString("es-ES", {
-            day: "2-digit",
-            month: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
-        {armed && (
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => {
-                onDelete(note.id);
-                setArmed(false);
-              }}
-              className="inline-flex items-center gap-1 text-coral-400 text-[12px] font-bold"
-            >
-              <Icon name="trash" className="w-3.5 h-3.5" /> Eliminar
-            </button>
-            <button
-              type="button"
-              onClick={() => setArmed(false)}
-              className="text-slate-400 text-[12px]"
-            >
-              Cancelar
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+import { SwipeRow } from "./SwipeRow";
 
 export function NotesSheet({
   target,
@@ -137,11 +68,23 @@ export function NotesSheet({
             </div>
           )}
           {sorted.map((n) => (
-            <CommentItem key={n.id} note={n} onDelete={onDelete} />
+            <SwipeRow key={n.id} onDelete={() => onDelete(n.id)}>
+              <div className="bg-white/5 px-3.5 py-2.5">
+                <p className="text-sm text-slate-100 whitespace-pre-wrap">{n.body}</p>
+                <p className="text-[10px] text-slate-500 mt-1">
+                  {new Date(n.created_at).toLocaleString("es-ES", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+            </SwipeRow>
           ))}
           {sorted.length > 0 && (
             <p className="text-center text-[11px] text-slate-600 pt-1">
-              Mantén pulsado un comentario para eliminarlo.
+              Desliza un comentario a la izquierda (o mantén pulsado) para eliminarlo.
             </p>
           )}
         </div>

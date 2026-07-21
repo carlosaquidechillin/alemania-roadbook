@@ -16,7 +16,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
+    <section className="rounded-2xl bg-white/5 p-5">
       <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
         <span>{emoji}</span>
         {title}

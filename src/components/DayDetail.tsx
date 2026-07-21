@@ -9,6 +9,7 @@ import { StopCard } from "./StopCard";
 import { CommentButton } from "./CommentButton";
 import { CheckButton } from "./CheckButton";
 import { Icon } from "./Icon";
+import { ParallaxHeader } from "./ParallaxHeader";
 
 const PLAN_TYPES = new Set<StopType>([
   "visit",
@@ -50,25 +51,16 @@ export function DayDetail({ id }: { id: string }) {
 
   return (
     <main className="min-h-screen pb-28">
-      {/* CABECERA */}
-      <header className="relative h-[58vh] min-h-[22rem] w-full overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={day.cover}
-          alt={day.title}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-transparent" />
+      <Link
+        href="/"
+        className="fixed top-4 left-4 z-50 glass text-white rounded-full w-11 h-11 flex items-center justify-center shadow-lg"
+        aria-label="Volver"
+      >
+        <Icon name="back" className="w-5 h-5" />
+      </Link>
 
-        <Link
-          href="/"
-          className="fixed top-4 left-4 z-50 glass text-white rounded-full w-11 h-11 flex items-center justify-center shadow-lg"
-          aria-label="Volver"
-        >
-          <Icon name="back" className="w-5 h-5" />
-        </Link>
-
-        <div className="absolute bottom-0 left-0 right-0 p-5">
+      <ParallaxHeader image={day.cover} alt={day.title} heightClass="h-[62vh]">
+        <div className="p-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-coral-400">
             Día {day.n} · {formatDayDate(day.n)}
           </p>
@@ -96,10 +88,12 @@ export function DayDetail({ id }: { id: string }) {
             </div>
           </div>
         </div>
-      </header>
+      </ParallaxHeader>
 
-      {/* PESTAÑAS */}
-      <div className="sticky top-0 z-10 bg-ink/90 backdrop-blur border-b border-white/10 flex">
+      {/* CONTENIDO (pasa por encima de la imagen) */}
+      <div className="relative z-10 bg-ink rounded-t-3xl -mt-6 min-h-screen">
+        {/* PESTAÑAS */}
+        <div className="sticky top-0 z-10 bg-ink/90 backdrop-blur border-b border-white/10 flex">
         {[
           { key: "plan" as const, label: "Plan del día" },
           { key: "practica" as const, label: "Info práctica" },
@@ -158,7 +152,7 @@ export function DayDetail({ id }: { id: string }) {
             ))}
 
             {clothing.length > 0 && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="rounded-2xl bg-white/5 p-4">
                 <h3 className="font-bold text-white flex items-center gap-2">
                   <Icon name="shirt" className="w-5 h-5 text-aqua-300" /> Qué llevar hoy
                 </h3>
@@ -174,7 +168,7 @@ export function DayDetail({ id }: { id: string }) {
             )}
 
             {costs.length > 0 && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="rounded-2xl bg-white/5 p-4">
                 <h3 className="font-bold text-white flex items-center gap-2">
                   <Icon name="euro" className="w-5 h-5 text-aqua-300" /> Costes del día
                 </h3>
@@ -194,13 +188,14 @@ export function DayDetail({ id }: { id: string }) {
         )}
 
         {/* Notas del día */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center justify-between">
+        <div className="rounded-2xl bg-white/5 p-4 flex items-center justify-between">
           <div>
             <p className="text-[13px] font-semibold text-white">Notas del día</p>
             <p className="text-[12px] text-slate-400">Comentarios generales de la jornada</p>
           </div>
           <CommentButton anchorId={day.id} />
         </div>
+      </div>
       </div>
     </main>
   );

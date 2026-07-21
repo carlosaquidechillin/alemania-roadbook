@@ -5,6 +5,7 @@ import { stopStyle } from "@/lib/stop-style";
 import { Icon } from "./Icon";
 import { CheckButton } from "./CheckButton";
 import { CommentButton } from "./CommentButton";
+import { P4NLogo } from "./P4NLogo";
 
 function Row({
   icon,
@@ -39,7 +40,7 @@ export function StopCard({
 
   return (
     <div
-      className={`rounded-2xl border border-white/10 bg-white/5 p-4 transition ${
+      className={`rounded-2xl bg-white/5 p-4 transition ${
         checked ? "opacity-50" : ""
       }`}
     >
@@ -112,9 +113,9 @@ export function StopCard({
                   href="https://park4night.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[12px] font-semibold text-aqua-300 inline-flex items-center gap-1"
+                  className="text-[12px] font-semibold text-aqua-300 inline-flex items-center gap-1.5"
                 >
-                  <Icon name="external" className="w-3.5 h-3.5" /> Park4Night
+                  <P4NLogo className="w-4 h-4" /> Park4Night
                 </a>
               )}
             </div>
